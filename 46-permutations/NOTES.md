@@ -1,1 +1,1 @@
-​
+Swap at every index.
