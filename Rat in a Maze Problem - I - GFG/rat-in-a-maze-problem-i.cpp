@@ -49,8 +49,7 @@ class Solution{
 vector<string> findPath(vector<vector<int>> &m, int n) {
         string s="";
         vector<string> ans;
-        vector<int> row(n,0);
-        vector<vector<int>> visited(n,row);
+        vector<vector<int>> visited(n,vector<int> (n,0));
         solve(ans,visited,m,n,s,0,0);
         sort(ans.begin(),ans.end());
         return ans;
