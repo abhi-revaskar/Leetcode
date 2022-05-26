@@ -11,11 +11,11 @@ public:
         while (l<=h)
         {
           mid=(l+h)/2;
-          if(mid-1<0 && nums[mid]!=nums[mid+1])
+          if(mid-1<0)
           {
             return nums[mid];
           }
-          else if(mid+1>=n && nums[mid]!=nums[mid-1])
+          else if(mid+1>=n)
           {
             return nums[mid];
           }
