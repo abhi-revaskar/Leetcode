@@ -11,11 +11,7 @@ public:
         while (l<=h)
         {
           mid=(l+h)/2;
-          if(mid-1<0)
-          {
-            return nums[mid];
-          }
-          else if(mid+1>=n)
+          if(mid-1<0 || mid+1>=n)
           {
             return nums[mid];
           }
