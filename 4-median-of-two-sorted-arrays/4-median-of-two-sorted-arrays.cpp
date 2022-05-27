@@ -26,21 +26,11 @@ public:
         {
           half=(n+m)/2+1;
         }
-        int l=0,h=half,l1,l2,r1,r2;
+        int l=max(0,half-m),h=min(half,n),l1,l2,r1,r2;
         int mid;
         while (l<=h)  
         {
           mid=(l+h)/2;
-            if(half-mid>m)
-          {
-            l=mid+1;
-            continue;
-          }
-            if(mid>n)
-          {
-            h=mid-1;
-            continue;
-          }
           l1=mid-1;r1=mid;l2=half-mid-1;r2=half-mid;
           if((l1<0?INT_MIN:nums1[l1])<=(r2==m?INT_MAX:nums2[r2]) && (l2<0?INT_MIN:nums2[l2])<=(r1==n?INT_MAX:nums1[r1]))
           {
