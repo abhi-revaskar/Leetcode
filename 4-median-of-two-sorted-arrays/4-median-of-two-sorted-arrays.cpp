@@ -17,15 +17,7 @@ public:
           else 
           return double(nums1[(n-1)/2]+nums1[(n-1)/2+1])/2.0;
         }
-        int half;
-        if((n+m)%2==0)
-        {
-          half=(n+m)/2;
-        }
-        else
-        {
-          half=(n+m)/2+1;
-        }
+        int half=(n+m+1)/2;;
         int l=max(0,half-m),h=min(half,n),l1,l2,r1,r2;
         int mid;
         while (l<=h)  
