@@ -10,18 +10,13 @@ class Solution{
 {
   if(m<n)
   return kthElement(arr2,arr1,m,n,k);
-  int l=0,h=min(n,k);
+  int l=max(0,k-m),h=min(n,k);
   int mid;
   while (l<=h)
   {
     mid=(l+h)/2;
     int c1=mid;
     int c2=k-mid;
-    if(c2>m)
-    {
-      l=mid+1;
-      continue;
-    }
     int l1= c1==0?INT_MIN:arr1[c1-1];
     int l2= c2==0?INT_MIN:arr2[c2-1];
     int r1= c1==n?INT_MAX:arr1[c1];
