@@ -1,1 +1,1 @@
-​
+Start from the index with the highest element and iterate circularly in the left direction.
