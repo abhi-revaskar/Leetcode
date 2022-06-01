@@ -14,60 +14,35 @@ public:
         }
         int final_idx=idx;
         st.push(high);
-        idx--;
-        while (idx>=0)
+        for(int i=nums.size()-1;i>0;i--)
         {
-          if(st.top()>nums[idx])
+          int tidx=i-(nums.size()-idx);
+          if(tidx<0)
+          tidx+=nums.size();
+          if(st.top()>nums[tidx])
           {
-            mx[idx]=st.top();
-            st.push(nums[idx]);
+            mx[tidx]=st.top();
+            st.push(nums[tidx]);
           }
           else
           {
-            while (!st.empty() && st.top()<=nums[idx])
+            while (!st.empty() && st.top()<=nums[tidx])
             {
               st.pop();
             }
             if(st.empty())
             {
-              mx[idx]=-1;
-              st.push(nums[idx]);
+              mx[tidx]=-1;
+              st.push(nums[tidx]);
             }
             else
             {
-              mx[idx]=st.top();
-              st.push(nums[idx]);
+              mx[tidx]=st.top();
+              st.push(nums[tidx]);
             }
           }
-          idx--;
         }
-        idx=nums.size()-1;
-        while (final_idx<idx)
-        {
-          if(st.top()>nums[idx])
-          {
-            mx[idx]=st.top();
-            st.push(nums[idx]);
-          }
-          else
-          {
-            while (!st.empty() && st.top()<=nums[idx])
-            {
-              st.pop();
-            }
-            if(st.empty())
-            {
-              mx[idx]=-1;
-              st.push(nums[idx]);
-            }
-            else
-            {
-              mx[idx]=st.top();
-              st.push(nums[idx]);
-            }
-          }
-          idx--;
-        }
+        
         return mx;
         
 
