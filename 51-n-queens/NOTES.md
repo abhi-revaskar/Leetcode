@@ -1,1 +1,2 @@
-​
+For each row, for each position, check if the queen can be placed. If can be placed, then place it and check for next rows, and after recursion is unfolded, remove it and check for next positions. If cannot be placed, then check for next positions. When we check for the nth row, it means all the rows have the queens placed perfectly.
+To check if we can place a queen at a position, we maintain three vectors to store the locations of the existing queens.
