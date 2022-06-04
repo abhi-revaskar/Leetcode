@@ -1,33 +1,58 @@
 class Solution {
 public:
-    string reverseWords(string s) {
-        stack<string> st;
-        string t = "";
-        for(int i=0;i<s.length();i++)
-        {
-            if(s[i]!=' ')
-            {
-                t+=s[i];
-            }
-            else
-            {
-                if(!t.empty())
-                {
-                    st.push(t);
-                    t="";
-                }
-            }
-        }
-        if(s[s.length()-1]!=' ')
-        st.push(t);
-        t="";
-        while(!st.empty())
-        {
-            t+=st.top();
-            st.pop();
-            if(!st.empty())
-                t+=' ';
-        }
-        return t;
+    void revword(string &s,int i,int j)
+{
+    while (i<j)
+    {
+        swap(s[i],s[j]);
+        i++;j--;
     }
+}
+string reverseWords(string &s) {
+    int i=0,j=0,n=s.length();
+    while (s[i]==' ')
+    {
+        i++;
+    }
+    j=i;
+    while (j<n)
+    {
+        while (j<n-1 && s[j+1]!=' ')
+        {
+            j++;
+        }
+        revword(s,i,j);
+        j++;
+        while (j<n && s[j]==' ')
+        {
+            j++;
+        }
+        i=j;
+    }
+    revword(s,0,n-1);
+    i=j=0;
+    while (true)
+    {
+        while (j<n && s[j]==' ')
+        {
+            j++;
+        }
+        if(j==n)
+        {
+            s.resize(i-1);
+            break;
+        }
+        while (j<n && s[j]!=' ')
+        {
+            s[i++]=s[j++];
+        }
+        if(j==n) 
+        {
+            s.resize(i);
+            break;
+        }
+        s[i++]=s[j];
+    }
+    return s;
+}
 };
