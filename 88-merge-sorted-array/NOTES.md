@@ -1,0 +1,1 @@
+Start from the last elements of both the arrays(m-1,n-1) and insert the element which is greater in the first array and compare the remaining elements till the second array is traversed completely.
