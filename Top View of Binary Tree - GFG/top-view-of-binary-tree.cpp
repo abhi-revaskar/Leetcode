@@ -111,7 +111,7 @@ class Solution
       mp[verticle].first=root->data;
       mp[verticle].second=level;
   }
-  else if(level<=mp[verticle].second)
+  else if(level<mp[verticle].second)
   {
       mp[verticle].first=root->data;
       mp[verticle].second=level;
