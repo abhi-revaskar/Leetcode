@@ -11,29 +11,32 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,int vert,int level,int &l,int &r,unordered_map<int,priority_queue<pair<int,int>, vector<pair<int,int>>,greater<pair<int,int>>>> &mp)
+    void solve(TreeNode* root,int vert,int level,map<int,map<int,priority_queue<int,vector<int>,greater<int>>>> &mp)
     {
         if(!root)
             return;
-        mp[vert].push({level,root->val});
-        l=min(l,vert);
-        r=max(r,vert);
-        solve(root->left,vert-1,level+1,l,r,mp);
-        solve(root->right,vert+1,level+1,l,r,mp);
+        mp[vert][level].push(root->val);
+        solve(root->left,vert-1,level+1,mp);
+        solve(root->right,vert+1,level+1,mp);
     }
     vector<vector<int>> verticalTraversal(TreeNode* root) {
-        int l=0,r=0;
         vector<vector<int>> ans;
-        unordered_map<int,priority_queue<pair<int,int>, vector<pair<int,int>>,greater<pair<int,int>>>> mp;
-        solve(root,0,0,l,r,mp);
-        ans.resize(r-l+1);
-        for(int i=l;i<=r;i++)
+        map<int,map<int,priority_queue<int,vector<int>,greater<int>>>> mp;
+        solve(root,0,0,mp);
+        
+        for(auto x:mp)
         {
-            while(!mp[i].empty())
+            vector<int> t;
+            for(auto y:x.second)
             {
-                ans[i-l].push_back(mp[i].top().second);
-                mp[i].pop();
+                while((!y.second.empty()))
+                {
+                    t.push_back(y.second.top());
+                y.second.pop();
+                }
+                
             }
+            ans.push_back(t);
         }
         return ans;
     }
