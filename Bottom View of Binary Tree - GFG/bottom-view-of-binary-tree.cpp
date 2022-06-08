@@ -95,7 +95,7 @@ Node* buildTree(string str)
 
 class Solution {
   public:
-    void solve(Node *root, int verticle,int level,unordered_map<int,pair<int,int>> &mp,int &l,int &r)
+    void solve(Node *root, int verticle,int level,map<int,pair<int,int>> &mp)
 {
   if(!root)
   return;
@@ -104,19 +104,16 @@ class Solution {
       mp[verticle].first=root->data;
       mp[verticle].second=level;
   }
-  l=min(l,verticle);
-  r=max(r,verticle);
-  solve(root->left,verticle-1,level+1,mp,l,r);
-  solve(root->right,verticle+1,level+1,mp,l,r);
+  solve(root->left,verticle-1,level+1,mp);
+  solve(root->right,verticle+1,level+1,mp);
 }
 vector <int> bottomView(Node *root) {
   vector<int> ans;
-        unordered_map<int,pair<int,int>> mp;
-        int l=0,r=0,lev=0;
-        solve(root,0,0,mp,l,r);
-        for (int i = l; i <= r; i++)
+        map<int,pair<int,int>> mp;
+        solve(root,0,0,mp);
+        for (auto x:mp)
         {
-          ans.push_back(mp[i].first);
+          ans.push_back(x.second.first);
         }
         return ans;
         
