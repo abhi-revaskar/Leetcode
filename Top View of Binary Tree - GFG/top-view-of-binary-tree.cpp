@@ -106,12 +106,7 @@ class Solution
 {
   if(!root)
   return;
-  if(!mp[verticle].first)
-  {
-      mp[verticle].first=root->data;
-      mp[verticle].second=level;
-  }
-  else if(level<mp[verticle].second)
+  if(!mp[verticle].first || level<mp[verticle].second)
   {
       mp[verticle].first=root->data;
       mp[verticle].second=level;
