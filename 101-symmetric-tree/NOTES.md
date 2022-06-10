@@ -1,1 +1,1 @@
-​
+For iterative, perform the preorder on the left (root,left,right) and the right(root,right,left) subtrees simultaneously and keep on checking whether the values match or not.
