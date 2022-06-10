@@ -24,7 +24,7 @@ public:
         return p->val==q->val && solve(p->left,q->right) && solve(p->right,q->left);
     }
     bool isSymmetric(TreeNode* root) {
-        // return solve(root->left,root->right);
+        // return solve(root->left,root->right); // RECURSIVE
         stack<TreeNode*> s1,s2;
         if(!root->left != !root->right)
             return false;
@@ -43,12 +43,12 @@ public:
             s2.pop();
             if(!t1->right != !t2->left || !t1->left != !t2->right)
                 return false;
-            if(t1->right && t2->left)
+            if(t1->right)
             {
                 s1.push(t1->right);
                 s2.push(t2->left);
             }
-            if(t1->left && t2->right)
+            if(t1->left)
             {
                 s1.push(t1->left);
                 s2.push(t2->right);
