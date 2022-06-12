@@ -11,45 +11,29 @@
  */
 class Solution {
 public:
- void  solve(TreeNode* &root,int val)
+    int idx=0;
+    unordered_map<int,int> mp;
+    TreeNode* solve(vector<int> pre,int l,int r)
     {
+        
+        if(l>r)
+            return NULL;
+        int val=pre[idx];
         TreeNode* node = new TreeNode(val);
-        if(!root)
-        {
-            root=node;
-            return;
-        }
-        TreeNode* t = root;
-        while(t)
-        {
-            if(t->val > val)
-            {
-                if(!t->left)
-                {
-                    t->left = node;
-                    return;
-                }
-                else 
-                    t=t->left;
-            }
-            else
-            {
-                if(!t->right)
-                {
-                    t->right = node;
-                    return;
-                }
-                else 
-                    t=t->right;
-            }
-        }
+        idx++;
+        TreeNode* le =  solve(pre,l,mp[val]-1);
+        TreeNode* ri =  solve(pre,mp[val]+1,r);
+        node->left = le;
+        node->right = ri;
+        return node;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
-        TreeNode* root=NULL;
-       for(int i=0;i<preorder.size();i++) 
-       {
-           solve(root,preorder[i]);
-       }
-        return root;
+        vector<int> a(preorder);
+        sort(a.begin(),a.end());
+        for(int i=0;i<a.size();i++)
+        {
+            mp[a[i]]=i;
+        }
+        return solve(preorder,0,a.size()-1);
     }
 };
