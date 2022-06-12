@@ -17,10 +17,8 @@ public:
             return NULL;
         int mid = (l+r)/2;
         TreeNode* node = new TreeNode(nums[mid]);
-        TreeNode* left1 = solve(nums,l,mid-1);
-        TreeNode* right1 = solve(nums,mid+1,r);
-        node->left = left1;
-        node->right = right1;
+        node->left = solve(nums,l,mid-1);
+        node->right = solve(nums,mid+1,r);
         return node;
     }
     TreeNode* sortedArrayToBST(vector<int>& nums) {
