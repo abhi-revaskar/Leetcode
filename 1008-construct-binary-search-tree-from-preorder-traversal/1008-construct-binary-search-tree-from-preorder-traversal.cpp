@@ -20,11 +20,9 @@ public:
             return NULL;
         int val=pre[idx];
         TreeNode* node = new TreeNode(val);
-        idx++;
-        TreeNode* le =  solve(pre,l,mp[val]-1);
-        TreeNode* ri =  solve(pre,mp[val]+1,r);
-        node->left = le;
-        node->right = ri;
+        idx++; 
+        node->left = solve(pre,l,mp[val]-1);;
+        node->right = solve(pre,mp[val]+1,r);;
         return node;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
