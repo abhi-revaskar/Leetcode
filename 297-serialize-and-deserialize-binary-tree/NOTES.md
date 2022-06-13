@@ -1,1 +1,1 @@
-​
+Use level order traversal for encoding and decoding.
