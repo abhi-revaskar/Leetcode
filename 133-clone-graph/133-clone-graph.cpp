@@ -35,11 +35,6 @@ public:
         while(!st.empty())
         {
             auto t = st.front();
-            if(visit[t])
-            {
-                st.pop();
-                continue;
-            }
             for(auto nbr:t->neighbors)
             {
                 if(oldnew.find(nbr)==oldnew.end())
@@ -50,7 +45,11 @@ public:
                 // cout<<t->val<<" "<<nbr->val<<" "<<visit[nbr]<<endl;
                 oldnew[t]->neighbors.push_back(oldnew[nbr]);
                 if(!visit[nbr])
+                {
                     st.push(nbr);
+                    visit[nbr]=1;
+                }
+                
             }
             visit[t]=1;
             st.pop();
