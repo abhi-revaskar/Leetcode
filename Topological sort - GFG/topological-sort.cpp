@@ -20,19 +20,54 @@ class Solution
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	    vector<int> v(V,0);
-	    for(int i=0;i<V;i++)
-	    {
-	        if(!v[i])
-	        dfs(i,v,adj);
-	    }
-	    vector<int> ans;
-	while(!st.empty())
-	{
-	    ans.push_back(st.top());
-	    st.pop();
-	}
-	return ans;
+// 	    vector<int> v(V,0);
+// 	    for(int i=0;i<V;i++)
+// 	    {
+// 	        if(!v[i])
+// 	        dfs(i,v,adj);
+// 	    }
+// 	    vector<int> ans;
+// 	while(!st.empty())
+// 	{
+// 	    ans.push_back(st.top());
+// 	    st.pop();
+// 	}
+// 	return ans;
+    vector<int> deg(V,0),ans,v(V,0);
+    queue<int> q;
+    for(int i=0;i<V;i++)
+    {
+        for(auto x:adj[i])
+        {
+            deg[x]++;
+        }
+    }
+    for(int i=0;i<V;i++)
+    {
+        if(deg[i]==0)
+        {
+            q.push(i);
+            v[i]=1;
+        }
+    }
+    while(!q.empty())
+    {
+        int t = q.front();
+        ans.push_back(t);
+        for(auto x:adj[t])
+        {
+            deg[x]--;
+            if(!v[x] && deg[x]==0)
+            {
+                q.push(x);
+                v[x]=1;
+            }
+        }
+        q.pop();
+    }
+    for(auto x:ans)
+    // cout<<x<<" ";
+    return ans;
 	}
 	
 };
