@@ -1,16 +1,15 @@
 class Solution {
 public:
-    bool dfs(vector<vector<int>>& graph,vector<int> &v,vector<int> &color,int i)
+    bool dfs(vector<vector<int>>& graph,vector<int> &color,int i)
     {
-        v[i]=1;
         for(auto x:graph[i])
         {
             if(color[x]==color[i])
                 return false;
-            if(!v[x])
+            if(!color[x])
             {
                 color[x]=-color[i];
-                if(!dfs(graph,v,color,x))
+                if(!dfs(graph,color,x))
                     return false;
             }
                 
@@ -18,13 +17,13 @@ public:
         return true;
     }
     bool isBipartite(vector<vector<int>>& graph) {
-        vector<int> color(graph.size(),0),v(graph.size(),0);
+        vector<int> color(graph.size(),0);
         for(int i = 0;i<graph.size();i++)
         {
-            if(!v[i])
+            if(!color[i])
             {
                 color[i]=1;
-                if(!dfs(graph,v,color,i))
+                if(!dfs(graph,color,i))
                     return false;
             }
         }
