@@ -1,1 +1,1 @@
-​
+DFS/BFS with opposite colors. No need of visited array coz if color is 0, it is not visited.
