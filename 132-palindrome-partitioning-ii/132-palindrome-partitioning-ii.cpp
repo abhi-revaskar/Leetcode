@@ -1,15 +1,18 @@
 class Solution {
 public:
-    int dp[2001];
-   bool pal(int i,int j,string &s)
+    int dp[2001],pdp[2001][2001];
+   bool pal(int l,int h,string &s)
    {
+       int i=l,j=h;
+       if(pdp[i][j]!=-1)
+           return pdp[l][h];
        while(i<=j)
        {
            if(s[i]!=s[j])
-               return false;
+               return pdp[l][h] =false;
            i++;j--;
        }
-       return true;
+       return pdp[l][h] = true;
    }
     int solve(int i,string &s)
     {
@@ -31,6 +34,7 @@ public:
     }
     int minCut(string s) {
         memset(dp,-1,sizeof(dp));
+        memset(pdp,-1,sizeof(pdp));
         return solve(0,s);
         
     }
