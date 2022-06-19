@@ -24,11 +24,10 @@ public:
         {
             if(pal(i,j,s))
             {
-                t=min(t,solve(j+1,s));
+                t=min(t,1+solve(j+1,s));
             }
         }
-        dp[i]=t+1;
-        return dp[i];
+        return dp[i]=t;
     }
     int minCut(string s) {
         memset(dp,-1,sizeof(dp));
