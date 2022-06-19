@@ -1,29 +1,28 @@
 class Solution {
 public:
-    unordered_map<string,int> mp;
-    int dp[301][301];
-    bool solve(int i,int j,string s,unordered_map<string,int> &mp)
-    {
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-        if(i==j)
-            return mp.find(s.substr(i,1))!=mp.end();
-        if(mp.find(s.substr(i,j-i+1))!=mp.end())
-            return true;
-        bool ans=0;
-        for(int k=i;k<j;k++)
-        {
-            bool t = solve(i,k,s,mp) && solve(k+1,j,s,mp);
-            ans = ans || t;
-        }
-        return dp[i][j] = ans;
-    }
     bool wordBreak(string s, vector<string>& w) {
-        memset(dp,-1,sizeof(dp));
+        unordered_map<string,int> mp;
         for(auto x:w)
         {
             mp[x]=1;
         }
-        return solve(0,s.size()-1,s,mp);
+        int dp[s.length()+1];
+        memset(dp,0,sizeof(dp));
+        dp[0]=1; //base condition
+        for(int i=1;i<=s.length();i++)
+        {
+            for(int j=i-1;j>=0;j--)
+            {
+                if(dp[j]==1) //if a valid segement ends here s[0..j]
+                {
+                    if(mp.find(s.substr(j,i-j))!=mp.end()) // if the substr s[j..i] is present in the dict
+                    {
+                        dp[i]=1;
+                        break; // found a valid segment ending at this position.
+                    }
+                }
+            }
+        }
+        return dp[s.length()];
     }
 };
