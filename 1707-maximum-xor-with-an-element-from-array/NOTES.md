@@ -1,1 +1,1 @@
-​
+Sort the array and the queries and insert only the elements which are less than or equal to the current query element m_i. and find the nums[i] which gives the maximum xor. Thus we will get the maximum xor only with the elements which are less than or equal to the given m.
