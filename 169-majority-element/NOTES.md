@@ -1,0 +1,2 @@
+* Starting from the first element, consider the first element as the candidate for the majority element. Whenever we see the candidate element in the array, increase the count by 1 else decrease by 1. When the count becomes 0, consider the current element as the candidate for the majorirty element and repeat the process till the end of the array.
+* The candidate element in the end is the majority element.
