@@ -1,21 +1,30 @@
 class Solution {
 public:
-    bool solve(int i,int j,vector<vector<char>>& b,string w,int it,vector<vector<int>> &vis)
+    bool solve(int i,int j,vector<vector<char>>& b,string w)
     {
-        if(b[i][j]!=w[it])
-            return false;
-        vis[i][j]=1;
-        if(it == w.size()-1)
+        if(w.size()==0)
             return true;
-        if(j>0 && vis[i][j-1]==0 && solve(i,j-1,b,w,it+1,vis))
-                return true;
-        if(j<b[0].size()-1 && vis[i][j+1]==0 && solve(i,j+1,b,w,it+1,vis))
-                return true;
-        if(i>0 && vis[i-1][j]==0 && solve(i-1,j,b,w,it+1,vis))
-                return true;
-        if(i<b.size()-1 && vis[i+1][j]==0 && solve(i+1,j,b,w,it+1,vis))
-                return true;
-        vis[i][j]=0;
+        
+        if(i<0 || j<0 || i==b.size() || j==b[0].size())
+            return false;
+        
+        
+        if(b[i][j]!=w[0])
+            return false;
+        
+        string s = w.substr(1);
+        char c = b[i][j];
+        b[i][j]='#';
+        if(solve(i,j-1,b,s))
+            return true;
+        if(solve(i,j+1,b,s))
+            return true;
+        if(solve(i-1,j,b,s))
+            return true;
+        if(solve(i+1,j,b,s))
+            return true;
+        
+        b[i][j]=c;
         return false;
         
     }
@@ -27,8 +36,7 @@ public:
             {
                 if(board[i][j]==w[0])
                 {
-                    vector<vector<int>> vis(n,vector<int> (m,0));
-                    if(solve(i,j,board,w,0,vis))
+                    if(solve(i,j,board,w))
                         return true;
                 }
             }
