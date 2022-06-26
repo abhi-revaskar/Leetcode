@@ -8,7 +8,7 @@ public:
             if(nums[abs(x)-1]<0)
                 ans.push_back(abs(x));
             else
-                nums[abs(x)-1]=min(nums[abs(x)-1],-nums[abs(x)-1]);
+                nums[abs(x)-1]=-nums[abs(x)-1];
         }
         return ans;
     }
