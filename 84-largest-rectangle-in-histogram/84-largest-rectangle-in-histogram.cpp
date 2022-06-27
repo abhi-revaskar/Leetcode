@@ -27,10 +27,6 @@ public:
         int ans = 0;
         for(int i=0;i<h.size();i++)
         {
-            // cout<<lse[i]<<" "<<rse[i]<<endl;
-        }
-        for(int i=0;i<h.size();i++)
-        {
             ans = max(ans,h[i]*(rse[i]-lse[i]-1));
         }
         return ans;
