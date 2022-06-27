@@ -15,8 +15,6 @@ public:
             else
                  nums[n-1] = -n;
         }
-        for(auto x:nums)
-            cout<<x<<" ";
         for(int i=1;i<=nums.size();i++)
             if(nums[i-1]>=0)
                 return i;
