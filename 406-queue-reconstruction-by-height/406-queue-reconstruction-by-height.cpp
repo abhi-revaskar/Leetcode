@@ -3,8 +3,6 @@ public:
     vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
         vector<vector<int>> ans(people.size(),vector<int> ({INT_MAX,0}));
         sort(people.begin(),people.end());
-        for(auto x:people)
-            // cout<<x[0]<<" "<<x[1]<<endl;
         int n =people.size();
         for(int j=0;j<people.size();j++)
         {
