@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void find(int i,vector<int> &nums,vector<vector<int>> &ans)
+    void find(int i,vector<int> nums,vector<vector<int>> &ans)
     {
         if(i==nums.size())
         {
@@ -11,7 +11,7 @@ public:
         {
             swap(nums[i],nums[j]);
             find(i+1,nums,ans);
-            swap(nums[i],nums[j]);
+            // swap(nums[i],nums[j]);
         }
     }
     vector<vector<int>> permute(vector<int>& nums) {
