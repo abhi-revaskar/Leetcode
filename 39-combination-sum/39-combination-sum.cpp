@@ -1,23 +1,25 @@
 class Solution {
 public:
-    void solve(vector<int> &ds,vector<vector<int>> &ans,vector<int> &cand,int i,int t)
+    void find(int i,vector<int> &ds,vector<vector<int>> &ans,vector<int> &cand,int t)
     {
+        if(t<0)
+            return;
         if(t==0)
         {
             ans.push_back(ds);
-            return;
+            return ;
         }
-        if(i == cand.size() || t<0)
+        if(i==cand.size())
             return;
-        solve(ds,ans,cand,i+1,t);
+        find(i+1,ds,ans,cand,t); //dont pick and move
         ds.push_back(cand[i]);
-        solve(ds,ans,cand,i,t-cand[i]);
-        ds.pop_back()            ;
+        find(i,ds,ans,cand,t-cand[i]); //pick and stay
+        ds.pop_back(); //backtrack
     }
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    vector<vector<int>> combinationSum(vector<int>& cand, int t) {
         vector<int> ds;
         vector<vector<int>> ans;
-        solve(ds,ans,candidates,0,target);
+        find(0,ds,ans,cand,t);
         return ans;
     }
 };
