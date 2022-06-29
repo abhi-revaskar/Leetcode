@@ -1,26 +1,22 @@
 class Solution {
 public:
-   void findperm(vector<vector<int>>& ans,vector<int>& a,int i)
-{
-  int n=a.size();
-  if (n==1)
-  {
-    ans.push_back({a[0]});
-      return;
-  }
-  if (i>=n)
-  ans.push_back(a);
-  for (int j = i; j < n; j++)
-  {
-    swap(a[i],a[j]);
-    findperm(ans,a,i+1);
-    swap(a[i],a[j]);//backtrack
-  }
-
-}
-vector<vector<int>> permute(vector<int>& nums) {
+    void find(int i,vector<int> &nums,vector<vector<int>> &ans)
+    {
+        if(i==nums.size())
+        {
+            ans.push_back(nums);
+            return ;
+        }
+        for(int j = i;j<nums.size();j++)
+        {
+            swap(nums[i],nums[j]);
+            find(i+1,nums,ans);
+            swap(nums[i],nums[j]);
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
         vector<vector<int>> ans;
-        findperm(ans,nums,0);
+        find(0,nums,ans);
         return ans;
     }
 };
