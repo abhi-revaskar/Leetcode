@@ -1,35 +1,38 @@
 class Solution {
 public:
-   // use global variables to avoid long parameter list
-   int target; // of each bucket
-   vector< int > ns;
-   vector< int > bucket;
-
-   bool canPartitionKSubsets( vector<int>& nums, int k ) {
-       int sum = 0;
-       for( int &n : nums ) sum += n;
-       if( sum % k ) return false; // not divisible
-       target = sum / k;
-       ns = vector< int >( nums );
-       bucket = vector< int >( k, 0 );
-       // starting with bigger ones makes it faster
-       sort( ns.begin(), ns.end() );
-       reverse( ns.begin(), ns.end() );
-       return put( 0 );
-   }
-
-   // put #n item of ns into some bucket to meet target
-   bool put( int n ) {
-       for( int i = 0; i < bucket.size(); ++i ) {
-           if( bucket[i] + ns[n] > target ) continue; // try next bucket
-           bucket[i] += ns[n]; // put it in!
-           if( n == ns.size() - 1 ) return true; // all items in bucket, no overflow
-           if( put( n + 1 ) ) return true; // move on to next item
-           else { // no solution = wrong bucket
-               bucket[i] -= ns[n]; // take it out
-               if( bucket[i] == 0 ) return false; // no need to try other empty bucket
-           }
-       }
-       return false; // no bucket fits
-   }
+    bool find(int i,vector<int> &nums,vector<int> &part,int &t)
+    {
+        if(i==nums.size())
+        {
+            return true;
+        }
+        
+        int f = 0;
+        for(int j=0;j<part.size();j++)
+        {
+            if(part[j]+nums[i]<=t)
+            {
+                part[j]+=nums[i];
+                if(find(i+1,nums,part,t))
+                    return true;
+                part[j]-=nums[i];
+                if(part[j]==0)
+                    return false;
+            }
+        }
+        return false;
+    }
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        vector<int> part(k,0);
+        int sum=0;
+        for(auto x:nums)
+            sum+=x;
+        if(sum%k!=0)
+            return false;
+        // cout<<sum/k;
+        sort(nums.begin(),nums.end());
+        reverse(nums.begin(),nums.end());
+        int t = sum/k;
+        return find(0,nums,part,t);
+    }
 };
