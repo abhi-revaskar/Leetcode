@@ -30,8 +30,8 @@ public:
         if(sum%k!=0)
             return false;
         // cout<<sum/k;
-        // sort(nums.begin(),nums.end());
-        // reverse(nums.begin(),nums.end());
+        sort(nums.begin(),nums.end());
+        reverse(nums.begin(),nums.end());
         int t = sum/k;
         return find(0,nums,part,t);
     }
