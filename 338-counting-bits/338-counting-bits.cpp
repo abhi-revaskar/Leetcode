@@ -2,8 +2,6 @@ class Solution {
 public:
     vector<int> countBits(int n) {
         vector<int> ans(n+1);
-        int mask = 2;
-        int cnt = 4;
         ans[0]=0;
         if(n==0)
             return ans;
@@ -12,12 +10,10 @@ public:
             return ans;
         for(int i=2;i<=n;i++)
         {
-            if(i==cnt)
-            {
-                cnt*=2;
-                mask<<=1;
-            }
-            ans[i]=ans[i&(~mask)]+1;
+            if(i&1)
+                ans[i] = ans[i>>1]+1;
+            else
+                ans[i] = ans[i>>1];
         }
         return ans;
     }
