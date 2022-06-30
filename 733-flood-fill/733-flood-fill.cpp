@@ -1,22 +1,21 @@
 class Solution {
 public:
-   void  solve(vector<vector<int>>& ans,int r, int c, int clr,int old)
+    void dfs(int sr,int sc,int old,int color,vector<vector<int>> &img)
     {
-        if(r<0 || r>= ans.size() || c<0 || c>ans[0].size())
+        if(sr<0 || sr>=img.size() || sc<0 || sc>= img[0].size() || img[sr][sc]!=old) 
             return;
-        if(ans[r][c]==old)
-        {
-            ans[r][c]=clr;
-            solve(ans,r+1,c,clr,old);
-            solve(ans,r-1,c,clr,old);
-            solve(ans,r,c-1,clr,old);
-            solve(ans,r,c+1,clr,old);
-        }
+        img[sr][sc] = color;
+        dfs(sr+1,sc,old,color,img);
+        dfs(sr-1,sc,old,color,img);
+        dfs(sr,sc+1,old,color,img);
+        dfs(sr,sc-1,old,color,img);
     }
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-        int old=image[sr][sc];
-        if(old!= newColor)
-        solve(image,sr,sc,newColor,old);
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int old = image[sr][sc];
+        if(old!=color)
+        {
+            dfs(sr,sc,old,color,image);
+        }
         return image;
     }
 };
