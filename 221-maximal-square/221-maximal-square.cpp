@@ -25,9 +25,9 @@ public:
                 }
                 else
                     dp[j]=0;
-                cout<<dp[j]<<" ";
+                // cout<<dp[j]<<" ";
             }
-            cout<<endl;
+            // cout<<endl;
         }
         return ans;
     }
