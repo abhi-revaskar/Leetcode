@@ -1,1 +1,1 @@
-​
+Maintain a max product and a min product and update it according to the current value of the integer.
