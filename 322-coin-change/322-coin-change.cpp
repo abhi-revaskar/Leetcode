@@ -1,28 +1,25 @@
 class Solution {
 public:
-    int coinChange(vector<int>& coins, int am) {
-        int n = coins.size();
-        vector<long long> prev(am+1,0),curr(am+1);
-        for(int i = 1;i<=am;i++)
-        {
-            prev[i]=INT_MAX;
-        }
-        for(int i=1;i<=n;i++)
-        {
-            curr[0]=0;
-            for(int j=1;j<=am;j++)
-            {
-                if(coins[i-1]>j)
-                    curr[j]=prev[j];
-                else
-                {
-                    curr[j] = min(1+prev[j-coins[i-1]],
-                                  min(1+curr[j-coins[i-1]],prev[j]));
-                }
-                    
-            }
-            prev=curr;
-        }
-        return prev[am]==INT_MAX?-1:prev[am];
+    int dp[13][10001];
+    int solve(int i,vector<int> &coins,int amt)
+    {
+        if(dp[i][amt]!=-1)
+            return dp[i][amt];
+        if(amt == 0)
+            return dp[i][amt]=0;
+        if(i==coins.size() || amt<0)
+            return 10001;
+        int ans = 10001;
+        ans = min(ans,solve(i+1,coins,amt));
+        if(coins[i]<=amt)
+            ans = min(ans,1+solve(i,coins,amt-coins[i]));
+        return dp[i][amt]=ans;
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        memset(dp,-1,sizeof(dp));
+        int ans = solve(0,coins,amount);
+        if(ans>10000)
+            return -1;
+        return ans;
     }
 };
