@@ -3,21 +3,34 @@ public:
     vector<vector<int>> a;
     NumMatrix(vector<vector<int>>& matrix) {
         int n = matrix.size(),m = matrix[0].size();
-        for(int i=0;i<n;i++)
+        a=matrix;
+        for(int i = 0;i<n;i++)
         {
-            int sum = 0;
-            for(int j = 1;j<m;j++)
+            for(int j = 0;j<m;j++)
             {
-                matrix[i][j] += matrix[i][j-1];
+                if(i==0)
+                {
+                    if(j==0)
+                        a[i][j]=matrix[i][j];
+                    else
+                        a[i][j]= a[i][j-1]+matrix[i][j];
+                }
+                else if(j==0)
+                    a[i][j]=a[i-1][j]+matrix[i][j];
+                else
+                {
+                    a[i][j] = a[i-1][j]+a[i][j-1]-a[i-1][j-1]+matrix[i][j];
+                }
             }
         }
-        a = matrix;
     }
     
     int sumRegion(int row1, int col1, int row2, int col2) {
         int ans = 0;
-        for(int i = row1;i<=row2;i++)
-            ans+=a[i][col2]-(col1>0?a[i][col1-1]:0);
+        int up = row1>0?a[row1-1][col2]:0;
+        int left = col1>0? a[row2][col1-1] :0;
+        int upleft = (row1>0 && col1>0)?a[row1-1][col1-1]:0;
+        ans = a[row2][col2] - up  - left + upleft;
         return ans;
     }
 };
