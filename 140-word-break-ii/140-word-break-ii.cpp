@@ -1,8 +1,11 @@
 class Solution {
 public:
     unordered_set<string> set;
+    unordered_map<string,vector<string>> dp;
     vector<string> solve(string s,vector<string> &dict)
     {
+        if(dp.find(s)!=dp.end())
+            return dp[s];
         vector<string> ans;
         for(int idx = 0;idx<s.length();idx++)
         {
@@ -12,7 +15,7 @@ public:
                 if(idx==s.length()-1)
                 {
                     ans.push_back(prefix);
-                    return ans;
+                    return dp[s] = ans;
                 }
                 vector<string> temp = solve(s.substr(idx+1),dict);
                 for(auto x:temp)
@@ -21,7 +24,7 @@ public:
                 }
             }
         }
-        return ans;
+        return dp[s] = ans;
     }
     vector<string> wordBreak(string s, vector<string>& dict) {
         for(auto x:dict)
