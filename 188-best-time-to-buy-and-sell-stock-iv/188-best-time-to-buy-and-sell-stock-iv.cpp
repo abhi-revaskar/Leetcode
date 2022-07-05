@@ -1,31 +1,18 @@
 class Solution {
 public:
-    int dp[1001][101];
-    int solve(int i,int k,vector<int> &prices)
+    int dp[1001][201];
+    int solve(int i,int trans,vector<int> &prices)
     {
-        if(dp[i][k]!=-1)
-            return dp[i][k];
-        if(k==0 || i==prices.size())
-            return dp[i][k] = 0;
-        int ans = 0,mini=prices[i],curr=0;
-        for(int idx=i+1;idx<prices.size();idx++)
-        {
-            if(prices[idx]<mini)
-            {
-                mini = prices[idx];
-            }
-            else if(prices[idx]>mini)
-            {
-                curr=max(curr,prices[idx]-mini);
-                ans = max(ans,curr+solve(idx,k-1,prices));
-            }
-        }
-        return dp[i][k] = ans;
+        if(dp[i][trans]!=-1)
+            return dp[i][trans];
+        if(i==prices.size() || trans == 0)
+            return dp[i][trans]= 0;
+        if(trans&1)
+            return dp[i][trans] =  max(prices[i]+solve(i+1,trans-1,prices),solve(i+1,trans,prices));
+        return dp[i][trans] = max(-prices[i]+solve(i+1,trans-1,prices),solve(i+1,trans,prices));
     }
     int maxProfit(int k, vector<int>& prices) {
-        if(prices.size()==0 || k==0)
-            return 0;
         memset(dp,-1,sizeof(dp));
-        return solve(0,k,prices);
+        return solve(0,2*k,prices);
     }
 };
