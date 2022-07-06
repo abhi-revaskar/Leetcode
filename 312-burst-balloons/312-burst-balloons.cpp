@@ -14,11 +14,7 @@ public:
     }
     int maxCoins(vector<int>& nums) {
         nums.push_back(1);
-        nums.push_back(1);
-        for(int i=nums.size()-2;i>0;i--)
-        {
-            swap(nums[i],nums[i-1]);
-        }
+        nums.insert(nums.begin(),1);
         memset(dp,-1,sizeof(dp));
         return solve(0,nums.size()-1,nums);
         return 0;
