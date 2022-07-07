@@ -1,21 +1,27 @@
 class Solution {
 public:
     int dp[102][102];
-    int solve(int i,int j,int l,int r,vector<int> &cuts){
-        if(dp[l][r]!=-1)
-            return dp[l][r];
-        if(l==r)
-            return 0;
+    int solve(int i,int j,vector<int> &cuts)
+    {
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+        if(i+1==j)
+            return dp[i][j] = 0;
         int ans = INT_MAX;
-        for(int k=l;k<r;k++)
+        for(int idx= i+1;idx<j;idx++)
         {
-            ans = min(ans,solve(i,cuts[k],l,k,cuts)+solve(cuts[k],j,k+1,r,cuts)+j-i);
+            int left = solve(i,idx,cuts);
+            int right = solve(idx,j,cuts);
+            ans = min(ans,left+right);
         }
-        return dp[l][r]=ans;
+        
+        return dp[i][j] = ans+cuts[j]-cuts[i];
     }
     int minCost(int n, vector<int>& cuts) {
-        sort(cuts.begin(),cuts.end());
         memset(dp,-1,sizeof(dp));
-        return solve(0,n,0,cuts.size(),cuts);
+        sort(cuts.begin(),cuts.end());
+        cuts.insert(cuts.begin(),0);
+        cuts.push_back(n);
+        return solve(0,cuts.size()-1,cuts);
     }
 };
