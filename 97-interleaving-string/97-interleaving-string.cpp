@@ -31,9 +31,6 @@ public:
             if(s3[n+i]==s2[i])
                 prev[i]=prev[i+1];
         }
-        // for(auto x:prev)
-        //     cout<<x<<" ";
-        // cout<<endl;
         for(int i=n-1;i>=0;i--)
         {
             dp[m]=((s3[m+i]==s1[i])?prev[m]:0);
@@ -45,12 +42,7 @@ public:
                     dp[j]=dp[j]||prev[j];
                 if(s2[j]==s3[j+i])
                     dp[j]=dp[j]||dp[j+1];
-                // if(i==0 && j==0)
-                // cout<<s1[i]<<" "<<s2[j]<<" "<<s3[i+j]<<" "<<dp[j]<<endl;
             }
-            // for(auto x:dp)
-            //     cout<<x<<" ";
-            // cout<<endl;
             prev=dp;
         }
         return prev[0];
