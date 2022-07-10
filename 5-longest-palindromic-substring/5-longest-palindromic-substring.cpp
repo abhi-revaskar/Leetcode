@@ -1,60 +1,57 @@
 class Solution {
 public:
-    pair<int,int> ispal(string s,int i)
-{
-    pair<int,int> t={0,0},t1,t2;
-    int n=s.length();
-    int ans1=INT_MIN,l=i-1,r=i+1,ans2=INT_MIN;
-    if(n==1)
-    return {0,0};
-    if(i==0)
+    pair<int,int> palidx(string s,int i,int j)
     {
-        return s[i]==s[i+1]? t={i,i+1}:t={i,i};
-    }
-    if(i==n-1)
-    {
-        return s[i]==s[i-1]?t={i-1,i}:t={i,i};
-    }
-    if(s[i]!= s[i+1] && s[i-1]!= s[i+1])
-    {
-        return {i,i};
-    }
-    if(s[l]== s[r])
-    {
-        ans1=1;
-        while (l>=0 && r<n && s[l]== s[r])
+        pair<int,int> ans{i,j};
+        while(i>=0 && j<s.length())
         {
-            ans1+=2;
-            l--;r++;
+            if(s[i]!=s[j])
+                return ans;
+            ans.first=i;
+            ans.second=j;
+            i--;
+            j++;
         }
-        t1= {l+1,r-1};
+        return ans;
     }
-    if(s[i]== s[i+1])
-    {
-        r=i+1;
-        ans2=0;
-        while (i>=0 && r<n && s[i]== s[r])
+    int palsubstr(string &s,int i,int j){
+        int ans = 1;
+        while(i>=0 && j<s.length())
         {
-            i--;r++;
-            ans2+=2;
+            if(s[i]!=s[j])
+                return ans;
+            ans++;
+            i--;
+            j++;
         }
-        t2= {i+1,r-1};
+        return ans;
     }
-    return  ans1>ans2?t1:t2;
-}
-string longestPalindrome(string s) {
-    int ans=INT_MIN;
-    pair<int,int> idx;
-        for (int i = 0; i < s.length(); i++)
+    string longestPalindrome(string s) {
+        int oddidx=0,len1=1,evenidx=0,len2=1;
+        for(int i=0;i<s.length();i++)
         {
-            auto t=ispal(s,i);
-            // cout<<t.first<<" "<<t.second<<endl;
-            if((t.second-t.first)>ans)
+            int oddlen = palsubstr(s,i,i);
+            if(oddlen>len1)
             {
-                idx=t;
-                ans=t.second-t.first;
+                oddidx=i;
+                len1=oddlen;
+            }
+            int evenlen = palsubstr(s,i,i+1);
+            if(evenlen>len2)
+            {
+                evenidx=i;
+                len2 = evenlen;
             }
         }
-        return s.substr(idx.first,ans+1);
+        pair<int,int> idx;
+        string ret = "";
+        if(len1>len2)
+        {
+            idx = palidx(s,oddidx,oddidx);
+            return s.substr(idx.first,idx.second-idx.first+1);
+        }
+        idx = palidx(s,evenidx,evenidx+1);
+        return s.substr(idx.first,idx.second-idx.first+1);
+        
     }
 };
