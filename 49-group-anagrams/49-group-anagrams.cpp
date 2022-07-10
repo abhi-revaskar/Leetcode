@@ -4,8 +4,15 @@ public:
         unordered_map<string,vector<string>> mp;
         for(auto x:strs)
         {
-            string temp = x;
-            sort(temp.begin(),temp.end());
+            string temp = "";
+            vector<int> freq(26,0);
+            for(auto y:x)
+                freq[y-'a']++;
+            for(int i=0;i<26;i++)
+            {
+                for(int j=0;j<freq[i];j++)
+                    temp+=char('a'+i);
+            }
             mp[temp].push_back(x);
         }
         vector<vector<string>> ans;
