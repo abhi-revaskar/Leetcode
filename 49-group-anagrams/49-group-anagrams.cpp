@@ -10,8 +10,7 @@ public:
                 freq[y-'a']++;
             for(int i=0;i<26;i++)
             {
-                for(int j=0;j<freq[i];j++)
-                    temp+=char('a'+i);
+                temp+=string(freq[i],'a'+i);
             }
             mp[temp].push_back(x);
         }
