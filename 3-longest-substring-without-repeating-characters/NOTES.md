@@ -1,2 +1,1 @@
-* Sliding Window technique
-Check if the element at right pointer is already is present in the map. If not, then add it and update the answer, if it is present, then check if it is present at the left of the left pointer. If it is, then this element is not present in the current window so update the value in the hash map  and update the answer, else it is present in the current window hence move the left pointer to the right of it.
+​
