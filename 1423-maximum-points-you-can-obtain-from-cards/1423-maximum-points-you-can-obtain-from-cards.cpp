@@ -1,27 +1,28 @@
 class Solution {
 public:
-    int maxScore(vector<int>& cp,int k) {
-        int ans=INT_MIN;
-        int n = cp.size();
-        int sum = 0;
-        for(auto x:cp)
-            sum+=x;
-        int i=0,j=0,temp=0;
-        while(j<n)
-        {
-            if(j<n-k)
-            {
-                temp+=cp[j];
-                j++;
-            }
-            else
-            {
-                ans = max(ans,sum-temp);
-                temp = temp-cp[i]+cp[j];
-                i++;j++;
-            }
-        }
-        ans = max(ans,sum-temp);
-        return ans;
+    int maxScore(vector<int>& a,int k) {
+        if(k==0)
+          return 0;
+          k = a.size()-k;
+          int total = 0;
+          for(auto x:a)
+          total+=x;
+          int i=0,j=0;
+          int subsum=0,ans = INT_MAX;
+          while (j<k)
+          {
+            subsum+=a[j];
+            j++;
+          }
+          while (j<a.size())
+          {
+            ans = min(ans,subsum);
+            subsum+=a[j];
+            subsum-=a[i];
+            j++;i++;
+          }
+          ans = min(ans,subsum);
+          // cout<<k<<" "<<total<<" "<<ans<<endl;
+          return total - ans;
     }
 };
