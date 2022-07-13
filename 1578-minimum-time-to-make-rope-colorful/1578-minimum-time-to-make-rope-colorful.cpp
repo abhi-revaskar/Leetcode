@@ -6,15 +6,8 @@ public:
         {
             if(colors[i]==colors[i-1])
             {
-                if(neededTime[i]<currmax)
-                {
-                    time+=neededTime[i];
-                }
-                else
-                {
-                    time+=currmax;
-                    currmax=neededTime[i];
-                }
+                time+=min(currmax,neededTime[i]);
+                currmax = max(currmax,neededTime[i]);
             }
             else
                 currmax=neededTime[i];
