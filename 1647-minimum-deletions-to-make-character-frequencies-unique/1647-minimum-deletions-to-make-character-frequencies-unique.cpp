@@ -1,31 +1,25 @@
 class Solution {
 public:
     int minDeletions(string s) {
-        sort(s.begin(),s.end());
-        unordered_set<int> set;
-        int ans = 0,freq=1;
-        char prev = s[0];
-        for(int i=1;i<s.length();i++)
+        unordered_set<int> uniquefreq;
+        vector<int> freqmap(26,0);
+        int ans = 0;
+        for(int i=0;i<s.size();i++)
         {
-            if(s[i]==prev)
-                freq++;
-            else
-            {
-                while(set.find(freq)!=set.end())
-                {
-                    freq--;
-                    ans++;
-                }
-                if(freq!=0)
-                set.insert(freq);
-                freq=1;
-                prev = s[i];
-            }
+            freqmap[s[i]-'a']++;
         }
-        while(set.find(freq)!=set.end())
+        for(int i=0;i<26;i++)
         {
-            freq--;
-            ans++;
+            if(freqmap[i]==0)
+                continue;
+            int currfreq = freqmap[i];
+            while(uniquefreq.count(currfreq)!=0)
+            {
+                ans++;
+                currfreq--;
+            }
+            if(currfreq!=0)
+                uniquefreq.insert(currfreq);
         }
         return ans;
     }
