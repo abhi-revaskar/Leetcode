@@ -16,7 +16,25 @@ public:
         return dp[i]=ans;
     }
     int jump(vector<int>& nums) {
-        memset(dp,-1,sizeof(dp));
-        return solve(nums,0);
+        // memset(dp,-1,sizeof(dp));
+        // return solve(nums,0);
+        if(nums.size()==1)
+            return 0;
+        int maxreach = nums[0],i=1,ans = 1;
+        while(i<nums.size())
+        {
+            if(maxreach >= nums.size()-1)
+                return ans;
+            int t = maxreach;
+            while(i<=maxreach)
+            {
+                t = max(t,nums[i]+i);
+                i++;
+            }
+            if(t!=maxreach)
+            ans++;
+            maxreach = t;
+        }
+        return ans;
     }
 };
