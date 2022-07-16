@@ -22,38 +22,38 @@ public:
 class Solution {
 public:
     Node* cloneGraph(Node* node) {
+        unordered_map<Node*,Node*> oldnew;
+        Node *ans;
+        unordered_set<int> set;
         if(!node)
             return NULL;
-        Node* n = new Node(node->val);
-        unordered_map<Node*,int> visit;
-        unordered_map<Node*,Node*> oldnew;
-        oldnew[node] = n;
-        if(node->neighbors.empty())
-            return n;
-        queue<Node*> st;
-        st.push(node);
-        while(!st.empty())
+        queue<Node*> q;
+        ans = new Node(node->val);
+        q.push(node);
+        oldnew[node] = ans;
+        set.insert(node->val);
+        while(!q.empty())
         {
-            auto t = st.front();
-            for(auto nbr:t->neighbors)
+            auto top = q.front();
+            q.pop();
+            for(auto x:top->neighbors)
             {
-                if(oldnew.find(nbr)==oldnew.end())
+                Node *nbr;
+                if(oldnew.count(x))
+                    nbr = oldnew[x];
+                else
                 {
-                    Node* nn = new Node(nbr->val);
-                    oldnew[nbr] = nn;
+                    nbr = new Node(x->val);
+                    oldnew[x] = nbr;
                 }
-                // cout<<t->val<<" "<<nbr->val<<" "<<visit[nbr]<<endl;
-                oldnew[t]->neighbors.push_back(oldnew[nbr]);
-                if(!visit[nbr])
+                oldnew[top]->neighbors.push_back(nbr);
+                if(set.count(x->val)==0)
                 {
-                    st.push(nbr);
-                    visit[nbr]=1;
+                    set.insert(x->val);
+                q.push(x);
                 }
-                
             }
-            visit[t]=1;
-            st.pop();
         }
-        return n;
+        return ans;
     }
 };
