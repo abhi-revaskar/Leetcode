@@ -10,7 +10,6 @@ public:
             i++;
             return ans;
         }
-    // cout<<s[i]<<i<<endl;
         if(s[i]>='a' && s[i]<='z')
         {
             ans+=s[i];
@@ -25,7 +24,6 @@ public:
         string sub = decodeString(s);
         while(count--)
             ans+=sub;
-        // cout<<i<<ans<<endl;
         return ans+decodeString(s);
     }
 };
