@@ -3,7 +3,6 @@ public:
     vector<int> dfs;
     void solve(int i,vector<vector<int>> &adj,vector<int> &vis,vector<int> &trav)
     {
-        // cout<<i<<endl;
         vis[i] = 1;
         for(auto x:adj[i])
         {
@@ -31,12 +30,9 @@ public:
                 solve(i,adj,vis,trav);
         }
         reverse(dfs.begin(),dfs.end());
-        // for(auto x:dfs)
-        //     cout<<x<<" ";
-        vector<int> ans;
         for(auto x:dfs)
             if(x==-1)
-                return ans;
+                return {};
         return dfs;
     }
 };
