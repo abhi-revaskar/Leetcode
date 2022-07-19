@@ -1,1 +1,1 @@
-​
+We will leverage the property of a BST. If the root is greater than both the nodes, then we move left, if it is lesser than the both then we move right, else it means either this node is one of the nodes or one node lies on the left and one lies on the right in both these cases the root is the LCA.
