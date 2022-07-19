@@ -11,26 +11,21 @@
  */
 class Solution {
 public:
-    bool isSubtree(TreeNode* root, TreeNode* subRoot,int is=1) {
-        if(!root && !subRoot)
+    bool issame(TreeNode* root,TreeNode* sub)
+    {
+        if(!root && !sub)
             return true;
-        if(!root || !subRoot)
+        if(!root || !sub)
             return false;
-        if(root->val!=subRoot->val)
-        {
-            if(is)
-            return isSubtree(root->left,subRoot,is) || isSubtree(root->right,subRoot,is);
-            else
-                return false;            
-        }
-        int left = isSubtree(root->left,subRoot->left,0);
-        int right = isSubtree(root->right,subRoot->right,0);
-        int notleft=0,notright=0;
-        if(is)
-        {
-            notleft = isSubtree(root->left,subRoot,is);
-            notright = isSubtree(root->right,subRoot,is);  
-        } 
-        return (left && right) || notleft || notright;
+        if(root->val != sub->val)
+            return false;
+        return issame(root->left,sub->left) && issame(root->right,sub->right);
+    }
+    bool isSubtree(TreeNode* root, TreeNode* sub) {
+        if(!root && sub)
+            return false;
+        if(issame(root,sub))
+            return true;
+        return isSubtree(root->left,sub) || isSubtree(root->right,sub);
     }
 };
