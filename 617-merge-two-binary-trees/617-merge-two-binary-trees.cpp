@@ -16,12 +16,7 @@ public:
         if(!root1 && !root2)
             return NULL;
         if(!root1)
-        {
-            TreeNode* node = new TreeNode(root2->val);
-            node->left = solve(node->left,root2->left);
-            node->right = solve(node->right,root2->right);
-            return node;
-        }
+        return root2;
         if(!root2)
             return root1;
         root1->val +=root2->val;
