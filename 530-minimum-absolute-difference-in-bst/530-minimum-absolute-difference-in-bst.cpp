@@ -10,22 +10,21 @@
  * };
  */
 class Solution {
-    const int mx = 100001,mn = -100001;
 public:
-    pair<int,int> solve(TreeNode* root,int &ans)
+    void solve(TreeNode* root,int &prev,int &ans)
     {
-        if(!root)
-            return {mx,mn};
-        if(!root->left && !root->right)
-            return {root->val,root->val};
-        auto left = solve(root->left,ans);
-        auto right = solve(root->right,ans);
-        ans = min(ans,min(root->val-left.second,right.first-root->val));
-        return {min(root->val,left.first),max(root->val,right.second)};
+        if(root->left)
+            solve(root->left,prev,ans);
+        if(prev!=-1)
+            ans = min(ans,root->val-prev);
+        prev = root->val;
+        if(root->right)
+            solve(root->right,prev,ans);
     }
     int getMinimumDifference(TreeNode* root) {
-       int ans = mx;
-        solve(root,ans);
+        int ans = INT_MAX;
+        int prev = -1;
+        solve(root,prev,ans);
         return ans;
     }
 };
