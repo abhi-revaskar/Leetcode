@@ -11,13 +11,28 @@
  */
 class Solution {
 public:
+    bool valid(int m,int low,int high)
+    {
+        return low<= m && m<=high;
+    }
     int rangeSumBST(TreeNode* root, int low, int high) {
-        if(!root)
-            return 0;
-        if(root->val<low)
-            return rangeSumBST(root->right,low,high);
-        if(root->val>high)
-            return rangeSumBST(root->left,low,high);
-        return root->val+ rangeSumBST(root->right,low,high)+rangeSumBST(root->left,low,high);
+        stack<TreeNode*> st;
+        int ans = 0;
+        st.push(root);
+        while(!st.empty())
+        {
+            auto t = st.top();st.pop();
+            if(t && valid(t->val,low,high))
+                ans+=t->val;
+            if(t)
+            {
+                if(t->val>low)
+                    st.push(t->left);
+                if(t->val<high)
+                    st.push(t->right);
+                    
+            }
+        }
+        return ans;
     }
 };
