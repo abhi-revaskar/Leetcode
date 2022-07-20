@@ -11,26 +11,26 @@
  */
 class Solution {
 public:
-    unordered_set<int> s;
-    void solve(TreeNode* root,int level,vector<int> &ans)
-    {
-        if(!root)
-            return;
-        if(s.count(level)==0)
-        {
-            ans.push_back(root->val);
-            s.insert(level);
-        }
-        if(root->right)
-            solve(root->right,level+1,ans);
-        if(root->left)
-            solve(root->left,level+1,ans);
-    }
     vector<int> rightSideView(TreeNode* root) {
         vector<int> ans;
         if(!root)
             return ans;
-        solve(root,0,ans);
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty())
+        {
+            ans.push_back(q.front()->val);
+            int t = q.size();
+            while(t--)
+            {
+                auto top = q.front();
+                q.pop();
+                if(top->right)
+                    q.push(top->right);
+                if(top->left)
+                    q.push(top->left);
+            }
+        }
         return ans;
     }
 };
