@@ -16,20 +16,25 @@ public:
         if(!root)
             return ans;
         TreeNode *t = root;
-        stack<TreeNode*> st;
-        while(true)
+        while(t)
         {
-            while(t)
+            if(!t->left)
             {
-                st.push(t);
-                t = t->left;
+                ans.push_back(t->val);
+                t = t->right;
             }
-            if(st.empty())
-                return ans;
-            t = st.top();
-            ans.push_back(t->val);
-            st.pop();
-            t = t->right;
+            else
+            {
+                TreeNode* pred = t->left ;
+                while(pred->right)
+                {
+                    pred = pred->right;
+                }
+                pred ->right = t;
+                pred = t->left;
+                t->left=NULL;
+                t = pred;
+            }
         }
         return ans;
     }
