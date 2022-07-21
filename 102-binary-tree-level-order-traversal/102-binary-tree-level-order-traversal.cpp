@@ -19,17 +19,17 @@ public:
         q.push(root);
         while(!q.empty())
         {
+            int currsize = q.size();
             vector<int> level;
-            int size=q.size();
-            while(size--)
+            while(currsize--)
             {
-                auto frontnode = q.front();
+                auto top = q.front();
                 q.pop();
-                level.push_back(frontnode->val);
-                if(frontnode->left)
-                    q.push(frontnode->left);
-                if(frontnode->right)
-                    q.push(frontnode->right);
+                level.push_back(top->val);
+                if(top->left)
+                    q.push(top->left);
+                if(top->right)
+                    q.push(top->right);
             }
             ans.push_back(level);
         }
