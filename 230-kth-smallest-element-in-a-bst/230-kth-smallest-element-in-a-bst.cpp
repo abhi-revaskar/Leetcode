@@ -18,11 +18,11 @@ public:
         {
             solve(root->left,k);
         }
-        k--;
-        if(k==0)
+        if(k==1)
         {
             ans = root->val;
         }
+        k--;
         if(root->right)
         {
             solve(root->right,k);
