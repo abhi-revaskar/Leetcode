@@ -15,18 +15,18 @@ public:
         if(!root)
             return;
         TreeNode* temp = root;
-        while(temp)
+        while(root)
         {
-            if(!temp->left)
-                temp=temp->right;
+            if(!root->left)
+                root=root->right;
             else
             {
-                TreeNode* pred=temp->left;
+                TreeNode* pred=root->left;
                 while(pred->right)
                     pred=pred->right;
-                pred->right = temp->right;
-                temp->right = temp->left;
-                temp->left = NULL;
+                pred->right = root->right;
+                root->right = root->left;
+                root->left = NULL;
             }
         }
     }
