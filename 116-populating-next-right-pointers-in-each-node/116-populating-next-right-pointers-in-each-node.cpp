@@ -19,42 +19,21 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
+        Node* level = root;
         if(!root)
             return root;
-        Node* last = root;
-        while(last->left)
+        while(level->left)
         {
-            Node* t = last;
-            while(t)
+            Node* it = level;
+            while(it)
             {
-                t->left->next = t->right;
-                if(t->next)
-                    t->right->next = t->next->left;
-                t = t->next;
+                it->left->next = it->right;
+                if(it->next)
+                    it->right->next=it->next->left;
+                it=it->next;
             }
-            last = last ->left;
+            level=level->left;
         }
         return root;
-//         queue<Node*> q;
-//         if(!root)
-//             return root;
-//         q.push(root);
-//         while(!q.empty())
-//         {
-//             int s = q.size();
-//             while(s--)
-//             {
-//                 auto t = q.front();
-//                 q.pop();
-//                 if(s && !q.empty())
-//                     t->next = q.front();
-//                 if(t->left)
-//                     q.push(t->left);
-//                 if(t->right)
-//                     q.push(t->right);
-//             }
-                
-//         }
-//         return root;
     }
 };
