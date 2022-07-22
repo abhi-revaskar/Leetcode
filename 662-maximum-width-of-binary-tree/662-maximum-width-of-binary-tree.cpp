@@ -12,22 +12,28 @@
 class Solution {
 public:
     int widthOfBinaryTree(TreeNode* root) {
-        long long ans = 0;
-        queue<pair<TreeNode*,long long>> q;
+        int ans = 0;
+        queue<pair<TreeNode*,int>> q;
         q.push({root,0});
         while(!q.empty())
         {
-            long long mini = q.front().second;
-            ans = max(ans,q.back().second-mini+1);
+            int mini = INT_MAX;
+            ans = max(ans,q.back().second-q.front().second+1);
             int size = q.size();
             while(size--)
             {
                 auto top = q.front();
                 q.pop();
                 if(top.first->left)
+                {
+                    mini = min(mini,top.second);
                     q.push({top.first->left,(top.second-mini)*2+1});
+                }
                 if(top.first->right)
+                {
+                    mini = min(mini,top.second);
                     q.push({top.first->right,(top.second-mini)*2+2});
+                }
             }
         }
         return ans;
