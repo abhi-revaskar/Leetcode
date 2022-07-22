@@ -1,1 +1,1 @@
-​
+Flatten left subtree and right subtree, and change the required pointers.
