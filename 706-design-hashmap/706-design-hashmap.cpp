@@ -1,28 +1,20 @@
 class MyHashMap {
 public:
-    vector<int> keyidx,val;
+    vector<int> map;
     MyHashMap() {
-        keyidx.resize(1000001,-1);
+        map.resize(1000001,-1);
     }
     
     void put(int key, int value) {
-        if(keyidx[key]!=-1)    
-        {
-            val[keyidx[key]] = value;
-            return;
-        }
-        val.push_back(value);
-        keyidx[key] = val.size()-1;
+        map[key] = value;
     }
     
     int get(int key) {
-        if(keyidx[key]==-1)
-            return -1;
-        return val[keyidx[key]];
+        return map[key];
     }
     
     void remove(int key) {
-        keyidx[key]=-1;
+        map[key]=-1;
     }
 };
 
