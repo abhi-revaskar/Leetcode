@@ -11,26 +11,25 @@
  */
 class Solution {
 public:
-    int kthSmallest(TreeNode* root, int k) {
-        int c=1;
-        stack<TreeNode*> st;
-        st.push(root);
-        while(!st.empty())
+    int ans;
+    void solve(TreeNode* root,int &k)
+    {
+        if(root->left)
         {
-            auto t = st.top();
-            if(!t)
-            {
-                st.pop();
-                t = st.top();
-                if(c==k)
-                    return t->val;
-                c++;
-                st.pop();
-                st.push(t->right);
-            }
-            else
-                st.push(t->left);
+            solve(root->left,k);
         }
-        return c;
+        k--;
+        if(k==0)
+        {
+            ans = root->val;
+        }
+        if(root->right)
+        {
+            solve(root->right,k);
+        }
+    }
+    int kthSmallest(TreeNode* root, int k) {
+        solve(root,k);
+        return ans;
     }
 };
