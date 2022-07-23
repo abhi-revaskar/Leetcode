@@ -1,7 +1,7 @@
 class Twitter {
 public:
     int time;
-    unordered_map<int,unordered_set<int>> followers,following;
+    unordered_map<int,unordered_set<int>> following;
     unordered_map<int,vector<pair<int,int>>> tweets; // userId : [[time,tweet]]
     Twitter() {
         time=0;
@@ -33,12 +33,10 @@ public:
     }
     
     void follow(int followerId, int followeeId) {
-        followers[followeeId].insert(followerId);
         following[followerId].insert(followeeId);
     }
     
     void unfollow(int followerId, int followeeId) {
-        followers[followeeId].erase(followerId);
         following[followerId].erase(followeeId);
     }
 };
