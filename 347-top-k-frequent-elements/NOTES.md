@@ -1,1 +1,1 @@
-Heap to get the elements in
+Store the frequency of each element in the map. [O(n)] Iterate over the elements and store the element against its frquency in other map.[O(n)] Iterate the second map from last and store the required elements in the answer array.[O(n)]
