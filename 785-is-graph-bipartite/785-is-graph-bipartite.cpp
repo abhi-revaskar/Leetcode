@@ -1,57 +1,32 @@
 class Solution {
 public:
-    bool dfs(vector<vector<int>>& graph,vector<int> &color,int i)
+    bool bfs(int x,vector<int> &color,vector<vector<int>> &graph)
     {
-        for(auto x:graph[i])
+        queue<int> q;
+        q.push(x);
+        color[x]=1;
+        while(!q.empty())
         {
-            if(color[x]==color[i])
-                return false;
-            if(!color[x])
+            auto top = q.front();
+            q.pop();
+            for(auto x:graph[top])
             {
-                color[x]=-color[i];
-                if(!dfs(graph,color,x))
+                if(color[x]==color[top])
                     return false;
+                if(color[x]==0)
+                {
+                    color[x]=-color[top];
+                    q.push(x);
+                }
             }
-                
         }
         return true;
     }
     bool isBipartite(vector<vector<int>>& graph) {
         vector<int> color(graph.size(),0);
-        // for(int i = 0;i<graph.size();i++)
-        // {
-        //     if(!color[i])
-        //     {
-        //         color[i]=1;
-        //         if(!dfs(graph,color,i))
-        //             return false;
-        //     }
-        // }
-        // return true;
-        queue<int> q;
-        for(int i=0;i<graph.size();i++)
-        {
-            if(!color[i])
-            {
-                q.push(i);
-                color[i]=1;
-                while(!q.empty())
-                {
-                    auto t = q.front();
-                    for(auto x:graph[t])
-                    {
-                        if(color[x]==color[t])
-                            return false;
-                        if(!color[x])
-                        {
-                            q.push(x);
-                            color[x]=-color[t];
-                        }
-                    }
-                    q.pop();
-                }
-            }
-        }
-        return true;
+        for(int i=0;i<color.size();i++)
+            if(color[i]==0 && !bfs(i,color,graph))
+                return false;
+        return true;    
     }
 };
