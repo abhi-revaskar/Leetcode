@@ -1,1 +1,2 @@
-​
+For each node in the tree, check if this node is one of the given nodes, if it is, return it else check for these nodes in the left and right subtrees. If any of the subtrees returns NULL, it means the nodes are not present in that subtree hence return the value returned by other subtree. If both the subtrees return non null values, it means that this node is the LCA of the given nodes hence return this node.
+If we arrive at any of the given nodes, then there are two possibilities for other node. It can be a part of this node's subtrees for which this node will be the answer or it can be a part of the other part of the tree in which case we should return this node. In both the cases, we need not to traverse this node's subtree and return only this node.
