@@ -1,2 +1,1 @@
-Use the value of null to print the answer at the top of the stack. push left if top is not null else print top, pop the push right.
-Morris : Make the right most node in the left subtree (last node) point to the root node.(node's right pointer). If the link is not created then create it , else delete the link if it is present.
+​
