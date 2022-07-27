@@ -29,7 +29,7 @@ public:
         long long ans = 0;
         for(int i=0;i<arr.size();i++)
         {
-            ans+=(nse[i]-pse[i]-1)*1LL*arr[i] + arr[i]*1LL*(i-pse[i]-1)*(nse[i]-i-1);
+            ans+=((nse[i]-i)*(i-pse[i]))*1LL*arr[i];
             ans%=mod;
         }
         return ans;
