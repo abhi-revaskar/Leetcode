@@ -6,7 +6,7 @@ public:
         st.push(INT_MAX);
         for(int i=arr.size()-1;i>=0;i--)
         {
-            while(st.top()<arr[i])
+            while(st.top()<=arr[i])
                 st.pop();
             nge[i] = st.top();
             st.push(arr[i]);
@@ -15,7 +15,7 @@ public:
         st.push(INT_MAX);
         for(int i=0;i<arr.size();i++)
         {
-            while(st.top()<=arr[i])
+            while(st.top()<arr[i])
                 st.pop();
             pge[i] = st.top();
             st.push(arr[i]);
