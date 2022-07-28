@@ -1,6 +1,6 @@
 class UndergroundSystem {
 public:
-    unordered_map<int,unordered_map<string,int>> in,out;
+    unordered_map<int,unordered_map<string,int>> in;
     unordered_map<string,unordered_map<string,vector<int>>> startend;
     UndergroundSystem() {
         
@@ -11,7 +11,6 @@ public:
     }
     
     void checkOut(int id, string stationName, int t) {
-        out[id][stationName] = t;
         auto start = in[id].begin();
         startend[start->first][stationName].push_back(t-start->second);
         in.erase(id);
