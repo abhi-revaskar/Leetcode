@@ -12,6 +12,8 @@ public:
         {
             int node = q.top()[1],wt = q.top()[0];
             q.pop();
+            if(wt>dist[node])
+                continue;
             for(auto nbrs:adj[node])
             {
                 if(dist[nbrs.first]>wt+nbrs.second)
