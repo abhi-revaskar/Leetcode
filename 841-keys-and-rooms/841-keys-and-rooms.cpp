@@ -1,18 +1,22 @@
 class Solution {
 public:
-    void dfs(int i,vector<int> &vis,vector<vector<int>> &rooms)
-    {
-        vis[i]=1;
-        for(auto x:rooms[i])
-        {
-            if(!vis[x])
-                dfs(x,vis,rooms);
-        }
-        
-    }
     bool canVisitAllRooms(vector<vector<int>>& rooms) {
         vector<int> vis(rooms.size(),0);
-        dfs(0,vis,rooms);
+        stack<int> st;
+        st.push(0);
+        vis[0]=1;
+        while(!st.empty())
+        {
+            int node = st.top();st.pop();
+            for(auto x:rooms[node])
+            {
+                if(!vis[x])
+                {
+                    vis[x]=1;
+                    st.push(x);
+                }
+            }
+        }
         for(auto x:vis)
             if(x==0)
                 return false;
