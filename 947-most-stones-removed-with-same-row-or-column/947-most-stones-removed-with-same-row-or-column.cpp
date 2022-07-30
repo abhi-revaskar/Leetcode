@@ -10,7 +10,7 @@ public:
         while(!q.empty())
         {
             auto top =q.front();q.pop();
-            for(auto t:row[top.second])
+            for(auto t:row[top.first])
             {
                 if(seen[t.first].count(t.second)==0)
                 {
@@ -19,7 +19,7 @@ public:
                     q.push(t);
                 }
             }
-            for(auto t:col[top.first])
+            for(auto t:col[top.second])
             {
                 if(seen[t.first].count(t.second)==0)
                 {
@@ -36,8 +36,8 @@ public:
         for(auto x:stones)
         {
             pair t = {x[0],x[1]};
-            row[x[1]].push_back(t);
-            col[x[0]].push_back(t);
+            row[x[0]].push_back(t);
+            col[x[1]].push_back(t);
         }
         int ans = 0;
         for(auto x:stones)
