@@ -1,38 +1,56 @@
 class Solution {
 public:
-    int solve(vector<pair<int,int>> &ones,int i,int j)
-    {
-        int ans = INT_MAX;
-        for(auto x:ones)
-            ans = min(ans,abs(i-x.first)+abs(j-x.second));
-        return ans;
-    }
     int maxDistance(vector<vector<int>>& grid) {
-        vector<pair<int,int>> ones;
-        int ans = 0,o=0,z=0;
+        int n = grid.size(),o=0,z=0;
+        queue<pair<int,int>> q;
         for(int i=0;i<grid.size();i++)
         {
             for(int j=0;j<grid.size();j++)
             {
                 if(grid[i][j]==1)
                 {
-                    ones.push_back({i,j});
                     o++;
+                    q.push({i,j});
                 }
             }
         }
         if(o==0)
             return -1;
-        for(int i=0;i<grid.size();i++)
+        int ans = -1;
+        while(!q.empty())
         {
-            for(int j=0;j<grid.size();j++)
+            int s=q.size();
+            while(s--)
             {
-                if(grid[i][j]==0)
+                auto x = q.front();
+                q.pop();
+                int i = x.first,j=x.second;
+                if(i>0 && grid[i-1][j]==0)
                 {
-                    ans = max(ans,solve(ones,i,j));
+                    q.push({i-1,j});
+                    grid[i-1][j]=1;
+                    z++;
+                }
+                if(i<n-1 && grid[i+1][j]==0)
+                {
+                    q.push({i+1,j});
+                    grid[i+1][j]=1;
+                    z++;
+                }
+                if(j>0 && grid[i][j-1]==0)
+                {
+                    q.push({i,j-1});
+                    grid[i][j-1]=1;
+                    z++;
+                }
+                if(j<n-1 && grid[i][j+1]==0)
+                {
+                    q.push({i,j+1});
+                    grid[i][j+1]=1;
                     z++;
                 }
             }
+            ans++;
         }
         if(z==0)
             return -1;
