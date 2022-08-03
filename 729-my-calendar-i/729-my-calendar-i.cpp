@@ -5,7 +5,7 @@ using namespace __gnu_pbds;
 
 
 
-typedef tree<pair<int,int>, null_type, less_equal<pair<int,int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
+typedef tree<pair<int,int>, null_type, less<pair<int,int>>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 class MyCalendar {
 public:
     ordered_set s;
