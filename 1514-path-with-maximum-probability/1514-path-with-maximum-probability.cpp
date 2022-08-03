@@ -18,9 +18,9 @@ public:
             pq.pop();
             for(auto x:adj[node])
             {
-                if(prob[x.first]<prob[node]*x.second)
+                if(prob[x.first]<w*x.second)
                 {
-                    prob[x.first] = prob[node]*x.second;
+                    prob[x.first] = w*x.second;
                     pq.push({prob[x.first],x.first});
                 }
             }
