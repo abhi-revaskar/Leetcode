@@ -1,28 +1,5 @@
 class Solution {
 public:
-    bool possible(vector<vector<pair<int,int>>> &adj,int k)
-    {
-        vector<int> vis(adj.size(),0);
-        queue<int> q;
-        q.push(0);
-        vis[0]=1;
-        while(!q.empty())
-        {
-            int node = q.front();
-            q.pop();
-            if(node==adj.size()-1)
-                return true;
-            for(auto x:adj[node])
-            {
-                if(!vis[x.first] && x.second<=k)
-                {
-                    vis[x.first]=1;
-                    q.push(x.first);
-                }
-            }
-        }
-        return false;
-    }
     int val(int i,int j,int m)
     {
         return (i*m+j);
@@ -50,15 +27,25 @@ public:
                 }
             }
         }
-        int l = 0,h=1e6;
-        while(l<=h)
+        vector<int> dist(adj.size(),INT_MAX);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        pq.push({0,0});
+        dist[0]=0;
+        while(!pq.empty())
         {
-            int mid = (l+h)/2;
-            if(possible(adj,mid))
-                h=mid-1;
-            else 
-                l=mid+1;
+            int d = pq.top().first,node = pq.top().second;
+            pq.pop();
+            if(d>dist[node])
+                continue;
+            for(auto x:adj[node])
+            {
+                if(dist[x.first]>max(dist[node],x.second))
+                {
+                    dist[x.first] = max(dist[node],x.second);
+                    pq.push({dist[x.first],x.first});
+                }
+            }
         }
-        return l;
+        return dist.back();
     }
 };
