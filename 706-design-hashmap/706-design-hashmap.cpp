@@ -2,7 +2,7 @@ class MyHashMap {
 public:
     vector<int> map;
     MyHashMap() {
-        map.resize(1000001,-1);
+        map.resize(1e6+1,-1);
     }
     
     void put(int key, int value) {
