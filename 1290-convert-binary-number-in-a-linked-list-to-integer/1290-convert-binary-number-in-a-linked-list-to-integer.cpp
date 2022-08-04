@@ -15,7 +15,7 @@ public:
         ListNode* t = head;
         while(t)
         {
-            ans = (ans<<1)+t->val;
+            ans = (ans<<1)|t->val;
             t = t->next;
         }
         return ans;
