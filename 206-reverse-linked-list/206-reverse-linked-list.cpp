@@ -10,20 +10,20 @@
  */
 class Solution {
 public:
-    pair<ListNode*,ListNode*> solve(ListNode* head)
+   ListNode* solve(ListNode* head)
     {
         if(head->next==NULL)
-            return {head,head};
+            return head;
         auto ans = solve(head->next);
-        ans.first->next = head;
-        return {head,ans.second};
+       head->next->next = head;
+       return ans;
     }
     ListNode* reverseList(ListNode* head) {
         if(!head)
             return head;
-        pair<ListNode*,ListNode*> ans;
+        ListNode* ans;
         ans = solve(head);
-        ans.first->next = NULL;
-        return ans.second;
+        head->next = NULL;
+        return ans;
     }
 };
