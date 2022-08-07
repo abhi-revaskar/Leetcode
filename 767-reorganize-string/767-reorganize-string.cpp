@@ -18,8 +18,6 @@ public:
         {
             auto top = q.top();
             q.pop();
-            if(top.second==ans.back())
-                return "";
             ans+=top.second;
             top.first--;
             if(prev.first)
