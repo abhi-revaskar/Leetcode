@@ -1,1 +1,1 @@
-​
+Heap storing largest 'l' jumps and keep track of the sum of the remaining jumps. If the sum of the jumps exceeds the no of bricks then return ;
