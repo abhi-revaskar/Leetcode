@@ -5,10 +5,10 @@ public:
         vector<vector<int>> dp(1001,vector<int> (1001,1));
         for(int i = 0;i<nums.size();i++)
         {
-            for(int j=0;j<i;j++)
+            for(int j=i-1;j>=0;j--)
             {
                 int diff = nums[i] - nums[j]+500;
-                dp[i][diff] = 1+dp[j][diff];
+                dp[i][diff] =max(dp[i][diff],1+dp[j][diff]);
                 ans = max(ans,dp[i][diff]);
             }
         }
