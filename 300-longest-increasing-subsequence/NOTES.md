@@ -1,1 +1,1 @@
-create a temp array which stores the elements in increasing order. for each element in the given array, get the position at which this element can be added into the temp array (using lower bound) then replace it at that position and return the size of the temp array in the end.
+​
