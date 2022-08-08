@@ -7,13 +7,9 @@ public:
         {
             for(int j=0;j<n;j++)
             {
-                if(pq.size()<k)
-                    pq.push(matrix[i][j]);
-                else if(pq.top()>matrix[i][j])
-                {
+                pq.push(matrix[i][j]);
+                if(pq.size()>k)
                     pq.pop();
-                    pq.push(matrix[i][j]);
-                }
             }
         }
         return pq.top();
