@@ -21,7 +21,7 @@ public:
         for(auto x:key)
         {
             if(curr->child.count(x)==0)
-                curr->child[x] = new Trie();
+                curr->child[x] = new Trie;
             curr = curr->child[x];
             curr->sum+=diff;
         }
