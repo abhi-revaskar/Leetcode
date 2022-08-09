@@ -1,29 +1,34 @@
 class Trie{
     public:
     unordered_map<char,Trie*> child;
-    unordered_map<string,int> mp;
-    
+    int sum; //sum of string values having this prefix   
+    Trie()
+    {
+        sum = 0;
+    }
 };
 class MapSum {
 public:
     Trie *root;
+    unordered_map<string,int> mp;
     MapSum() {
         root = new Trie;
     }
     
     void insert(string key, int val) {
+        int diff = val - mp[key];
         Trie *curr = root;
         for(auto x:key)
         {
             if(curr->child.count(x)==0)
                 curr->child[x] = new Trie();
             curr = curr->child[x];
-            curr->mp[key] =val;
+            curr->sum+=diff;
         }
+        mp[key] = val;
     }
     
     int sum(string prefix) {
-        int ans = 0;
         Trie *curr = root;
         for(auto x:prefix)
         {
@@ -31,9 +36,7 @@ public:
                 return 0;
             curr = curr->child[x];
         }
-        for(auto x:curr->mp)
-            ans+=x.second;
-        return ans;
+        return curr->sum;
     }
 };
 
