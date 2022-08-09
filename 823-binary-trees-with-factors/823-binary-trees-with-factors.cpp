@@ -9,12 +9,15 @@ public:
             mp[x]=1;
         for(int i=1;i<arr.size();i++)
         {
-            for(int j=0;j<i;j++)
+            for(int j=0;arr[j]<=sqrt(arr[i]);j++)
             {
                 if(arr[i]%arr[j]==0 && mp[arr[i]/arr[j]])           
                 {
                     long long m1 = arr[j], m2 = arr[i]/arr[j];
-                    mp[arr[i]]+=(mp[m1]*mp[m2])%mod;
+                    long long trees = (mp[m1]*mp[m2])%mod;
+                    mp[arr[i]]+=trees%mod;
+                    if(m1!=m2)
+                        mp[arr[i]]+=trees%mod;
                 }
             }
         }
