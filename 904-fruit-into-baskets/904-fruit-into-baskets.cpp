@@ -1,45 +1,20 @@
 class Solution {
 public:
     int totalFruit(vector<int>& fruits) {
-        int first = -1,second = -1,ans = INT_MIN;
-        unordered_map<int,int> idx;
-        int l=0,r=0;
-        while(r<fruits.size())
+        int i=0,j=0;
+        unordered_map<int,int> cnt;
+        while(j<fruits.size())
         {
-            // cout<<l<<","<<r<<" ";
-            // cout<<first<<" "<<second<<endl;
-            if(idx.count(fruits[r]))
+            cnt[fruits[j]]++;
+            if(cnt.size()>2)
             {
-                idx[fruits[r]]=r;
-                r++;
+                cnt[fruits[i]]--;
+                if(cnt[fruits[i]]==0)
+                    cnt.erase(fruits[i]);
+                i++;
             }
-            else
-            {
-                if(first==-1)
-                {
-                    first = fruits[r];
-                    idx[fruits[r]]=r;
-                    r++;
-                }
-                else if(second==-1)
-                {
-                    second = fruits[r];
-                    idx[fruits[r]]=r;
-                    r++;
-                }
-                else
-                {
-                    ans = max(ans,r-l);   
-                    if(idx[second]<idx[first])
-                        swap(first,second);
-                    l = idx[first]+1;
-                    idx.erase(first);
-                    first = -1;
-                }
-                
-            }
+            j++;
         }
-        ans = max(ans,r-l);
-        return ans;
+        return j-i;
     }
 };
