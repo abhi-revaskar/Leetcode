@@ -1,1 +1,1 @@
-​
+At each node, add the maximum path sums from the left and right subtrees. Update the answer if this addition gives higher answer. Take the max path sum from the two subtress and add into the current node. If the addition is negative then return 0 else return this addition.
