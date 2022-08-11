@@ -7,6 +7,7 @@ public:
         for(int i=0;i<nums.size();i++)
         {
             cnt+=nums[i]&1;
+            if(mp.count(cnt-k))
             ans+=mp[cnt-k];
             mp[cnt]++;
         }
