@@ -10,14 +10,14 @@ public:
         return hours<=h;
     }
     int minEatingSpeed(vector<int>& piles, int h) {
-        long long low = 1,high = 0;
+        int low = 1,high = 0;
         for(auto x:piles)
         {
-            high+=x;
+            high = max(high,x);
         }
         while(low<=high)
         {
-            long long mid = (low+high)/2;
+            int mid = (low+high)/2;
             if(isPossible(mid,piles,h))
                 high = mid-1;
             else 
