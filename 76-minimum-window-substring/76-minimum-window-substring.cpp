@@ -19,7 +19,7 @@ public:
         while(j<s.length())
         {
             mp2[s[j]]++;
-            if(check(mp1,mp2))
+            if(mp2.size()>=mp1.size() && check(mp1,mp2))
             {
                 // cout<<i<<" "<<j<<endl;
                 if((j-i)<(jmin-imin))
