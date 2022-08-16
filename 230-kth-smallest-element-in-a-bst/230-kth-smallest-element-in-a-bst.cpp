@@ -15,18 +15,13 @@ public:
     void solve(TreeNode* root,int &k)
     {
         if(root->left)
-        {
-            solve(root->left,k);
-        }
+        solve(root->left,k);
         if(k==1)
-        {
             ans = root->val;
-        }
         k--;
         if(root->right)
-        {
             solve(root->right,k);
-        }
+        
     }
     int kthSmallest(TreeNode* root, int k) {
         solve(root,k);
