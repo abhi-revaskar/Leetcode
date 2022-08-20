@@ -5,15 +5,9 @@ public:
         for(int i=0;i<points.size();i++)
         {
             int dist = pow(points[i][0],2)+pow(points[i][1],2);
-            if(pq.size()<k)
-            {
-                pq.push({dist,i});
-            }
-            else if(pq.top().first>dist)
-            {
+            pq.push({dist,i});
+            if(pq.size()>k)
                 pq.pop();
-                pq.push({dist,i});                
-            }
         }
         vector<vector<int>> ans;
         while(!pq.empty())
