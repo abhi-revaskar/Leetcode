@@ -3,16 +3,16 @@ public:
     int minRefuelStops(int target, int startFuel, vector<vector<int>>& stations) {
         int maxi = startFuel,ans = 0;
         stations.push_back({target,0});
-        priority_queue<pair<int,int>> pq;
+        priority_queue<int> pq;
         for(int i=0;i<stations.size()-1;i++)
         {
             // cout<<maxi<<" "<<stations[i][0]<<" "<<stations[i][1]<<endl;
             if(stations[i][0]<=maxi)
-                pq.push({stations[i][1],stations[i][0]});
+                pq.push(stations[i][1]);
             while(!pq.empty() && maxi<stations[i+1][0])
             {
                 ans++;
-                maxi+=pq.top().first;
+                maxi+=pq.top();
                 pq.pop();
             }
             if(maxi>=target)
