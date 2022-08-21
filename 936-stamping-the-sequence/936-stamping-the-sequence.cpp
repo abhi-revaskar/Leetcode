@@ -27,8 +27,6 @@ public:
             int f = 0;
             for(int i=0;i<=n-m;)
             {
-                if(ans.size()>(n*10))
-                    return {};
                 if(!check(target.substr(i,m)) && valid(target,i,stamp))
                 {
                     // cout<<i<<" "<<target<<endl;
