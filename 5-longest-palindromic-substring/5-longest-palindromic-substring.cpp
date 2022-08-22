@@ -1,57 +1,50 @@
 class Solution {
 public:
-    pair<int,int> palidx(string s,int i,int j)
+    vector<int> manacher_odd(string &s)
+{
+  int n = s.length();
+  s = '$'+s+'*';
+  int l = 0,r = 1; //make l = 0
+  vector<int> ans(n+1);
+  for (int i = 1; i <=n ; i++)
+  {
+    ans[i] = min(r-i,ans[l+r-i]); // j = l+r-i , i will always be <=r
+    //find if ans for i can be increased above curr ans
+    while (s[i-ans[i]]==s[i+ans[i]])
     {
-        pair<int,int> ans{i,j};
-        while(i>=0 && j<s.length())
-        {
-            if(s[i]!=s[j])
-                return ans;
-            ans.first=i;
-            ans.second=j;
-            i--;
-            j++;
-        }
-        return ans;
+      ans[i]++;
     }
-    int palsubstr(string &s,int i,int j){
-        int ans = 1;
-        while(i>=0 && j<s.length())
-        {
-            if(s[i]!=s[j])
-                return ans;
-            ans++;
-            i--;
-            j++;
-        }
-        return ans;
+    if(i+ans[i]>r)
+    {
+      r = i+ans[i];
+      l = i-ans[i];
     }
+  }
+  return vector<int>(begin(ans)+1,end(ans));
+}
     string longestPalindrome(string s) {
-        int oddidx=0,len1=1,evenidx=0,len2=1;
-        for(int i=0;i<s.length();i++)
+        string t;
+        for(auto c:s)
         {
-            int oddlen = palsubstr(s,i,i);
-            if(oddlen>len1)
-            {
-                oddidx=i;
-                len1=oddlen;
-            }
-            int evenlen = palsubstr(s,i,i+1);
-            if(evenlen>len2)
-            {
-                evenidx=i;
-                len2 = evenlen;
-            }
+            t+='#';
+            t+=c;
         }
-        pair<int,int> idx;
-        string ret = "";
-        if(len1>len2)
+        t+='#';
+        auto d = manacher_odd(t);
+        int n = s.length();
+        string ans;
+        vector<int> odd(n),even(n);
+        for (int i = 0; i < n; i++)
         {
-            idx = palidx(s,oddidx,oddidx);
-            return s.substr(idx.first,idx.second-idx.first+1);
+            odd[i] = d[2*i+1]-1;
+            even[i] = (d[2*i]-1);
+            if(ans.length()<odd[i])
+            {
+              ans = s.substr(i-odd[i]/2,odd[i]);
+            }
+            if(ans.length()<even[i])
+                ans = s.substr(i-even[i]/2,even[i]);
         }
-        idx = palidx(s,evenidx,evenidx+1);
-        return s.substr(idx.first,idx.second-idx.first+1);
-        
+        return ans;
     }
 };
