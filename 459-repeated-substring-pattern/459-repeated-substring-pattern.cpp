@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool match(string s,string t)
+    bool match(string &s,string &t)
     {
         int n = s.length(),m = t.length();
         for(int i=n;i<m;i+=n)
