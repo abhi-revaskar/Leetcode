@@ -9,7 +9,7 @@ public:
             z[i] = max(0,min(z[i-l],r-i+1));
             while(i+z[i]<n && t[z[i]]==t[i+z[i]])
                 z[i]++;
-            if(i+z[i]-1>r)
+            if(z[i] > 0 && i+z[i]-1>r)
             {
                 r = i+z[i]-1;
                 l = i;
