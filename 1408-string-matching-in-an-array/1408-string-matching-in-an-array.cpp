@@ -6,18 +6,13 @@ public:
     }
     vector<string> stringMatching(vector<string>& words) {
         sort(words.begin(),words.end(),comp);
-        unordered_set<string> s;
+        string t;
         vector<string> ans;
         for(auto x:words)
         {
-            if(s.count(x))
+            if(t.find(x)!=-1)
                 ans.push_back(x);
-            for(int i=0;i<x.length();i++)
-            {
-                string t = x.substr(i);
-                for(int j=1;j<=t.length();j++)
-                s.insert(t.substr(0,j));
-            }
+            t+=x+"#";
         }
         return ans;
     }
