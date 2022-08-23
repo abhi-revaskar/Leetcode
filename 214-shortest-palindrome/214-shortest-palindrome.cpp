@@ -1,30 +1,39 @@
 class Solution {
 public:
-    string shortestPalindrome(string s) {
-        string t=s;
-        reverse(t.begin(),t.end());
-        t=s+"#"+t;
-        vector<int> lps(t.length(),0);
-        int i=1,p=0;
-        while (i<t.length())
+    vector<int> z_func(string &t)
+    {
+        int l = 0,r=0,n=t.length();
+        vector<int> z(n,0);
+        for(int i=1;i<n;i++)
         {
-            if(t[p]==t[i])
+            z[i] = max(0,min(z[i-l],r-i+1));
+            while(i+z[i]<n && t[z[i]]==t[i+z[i]])
+                z[i]++;
+            if(i+z[i]-1>r)
             {
-                lps[i]=p+1;
-                i++;p++;
-            }
-            else if(p==0)
-            {
-                lps[i]=0;
-                i++;
-            }
-            else
-            {
-                p=lps[p-1];
+                r = i+z[i]-1;
+                l = i;
             }
         }
-        t=s.substr(lps.back());
+        return z;
+    }
+    string shortestPalindrome(string s) {
+        string t = s;
         reverse(t.begin(),t.end());
-        return t+s;
+        t = s +"#"+t;
+        auto z = z_func(t);
+        int n = z.size();
+        string add;
+        for(int i=0;i<n;i++)
+        {
+            if(i+z[i] == n)
+            {
+                add = s.substr(z[i]);
+                break;
+            }
+        }
+        reverse(add.begin(),add.end());
+        add = add +s;
+        return add;
     }
 };
