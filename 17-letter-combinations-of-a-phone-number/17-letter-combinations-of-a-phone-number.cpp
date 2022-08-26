@@ -1,25 +1,26 @@
 class Solution {
+unordered_map<char,string> mp;
 public:
-    unordered_map<int,string> mp;
-    void find(int i,string &s,vector<string> &ans,string &digits)
+    void solve(int i,string &s,vector<string> &ans,string &digits)
     {
-        if(i==digits.size() && !s.empty())
+        if(i==digits.size())
         {
             ans.push_back(s);
-            return ;
+            return;
         }
-        for(auto x:mp[digits[i]-'0'])
+        for(auto c:mp[digits[i]])
         {
-            s+=x;
-            find(i+1,s,ans,digits);
-            s.erase(s.length()-1);
+            s+=c;
+            solve(i+1,s,ans,digits);
+            s.pop_back();
         }
     }
     vector<string> letterCombinations(string digits) {
-        mp={{2,"abc"},{3,"def"},{4,"ghi"},{5,"jkl"},{6,"mno"},{7,"pqrs"},{8,"tuv"},{9,"wxyz"}};
-        string s;
+        if(digits=="") return {};
+        mp = {{'2',"abc"},{'3',"def"},{'4',"ghi"},{'5',"jkl"},{'6',"mno"},{'7',"pqrs"},{'8',"tuv"},{'9',"wxyz"}};
         vector<string> ans;
-        find(0,s,ans,digits);
+        string s;
+        solve(0,s,ans,digits);
         return ans;
     }
 };
