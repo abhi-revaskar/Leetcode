@@ -1,39 +1,34 @@
 class Solution {
+vector<int> col,leftD,rightD;
 public:
-    void nqueen(vector<vector<string>> &ans,vector<string>& temp,int n,int i,
-vector<int>& row,vector<int>& leftD,vector<int>& rightD)
-{
-  if(i==n)
-  {
-    ans.push_back(temp);
-    return;
-  }
-  for (int j = 0; j < n; j++)
-  {
-    if(row[j]==0 && leftD[j-i+n-1]==0 && rightD[i+j]==0)
+    void solve(int i,vector<string> &comb,vector<vector<string>> &ans,int n)
     {
-      temp[i][j]='Q';
-      row[j]=1;
-      leftD[j-i+n-1]=1;
-      rightD[i+j]=1;
-      nqueen(ans,temp,n,i+1,row,leftD,rightD);
-      temp[i][j]='.';
-      row[j]=0;
-      leftD[j-i+n-1]=0;
-      rightD[i+j]=0;
-    }  
-  }
-}
- vector<vector<string>> solveNQueens(int n) {
-        vector<vector<string>> ans;
-        vector<string> temp(n);
-        string s(n,'.');
-        for (int i = 0; i < n; i++)
+        if(i==n)
         {
-          temp[i]=s;
+            ans.push_back(comb);
+            return;
         }
-        vector<int> row(n,0),leftD(2*n-1,0),rightD(2*n-1,0);
-        nqueen(ans,temp,n,0,row,leftD,rightD);
+        for(int j=0;j<n;j++)
+        {
+            if(!col[j] && !leftD[j+n-1-i] && !rightD[i+j])
+            {
+                col[j]=1;
+                leftD[j+n-1-i]=1;
+                rightD[i+j]=1;
+                comb[i][j]='Q';
+                solve(i+1,comb,ans,n);
+                comb[i][j]='.';
+                col[j]=0;
+                leftD[j+n-1-i]=0;
+                rightD[i+j]=0;
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> ans;
+        col.resize(n,0),leftD.resize(2*n-1,0),rightD.resize(2*n-1,0);
+        vector<string> comb(n,string (n,'.'));
+        solve(0,comb,ans,n);
         return ans;
     }
 };
