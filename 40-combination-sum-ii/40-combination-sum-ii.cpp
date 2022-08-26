@@ -1,28 +1,28 @@
 class Solution {
 public:
-    void find(int i,vector<int> &ds,vector<vector<int>> &ans,vector<int> &cand,int t)
+    void solve(int i,vector<int> &ds,vector<vector<int>> &ans,int t,vector<int> &nums)
     {
         if(t==0)
         {
             ans.push_back(ds);
-            return ;
+            return;
         }
-        if(i==cand.size() || t<0)
-            return ;
-        for(int j=i;j<cand.size();j++)
+        if(t<0 || i==nums.size())
+            return;
+        for(int j=i;j<nums.size();j++)
         {
-            if(j>i && cand[j]==cand[j-1])
+            if(j>i && nums[j]==nums[j-1])
                 continue;
-            ds.push_back(cand[j]);
-            find(j+1,ds,ans,cand,t-cand[j]);
+            ds.push_back(nums[j]);
+            solve(j+1,ds,ans,t-nums[j],nums);
             ds.pop_back();
         }
     }
-    vector<vector<int>> combinationSum2(vector<int>& cand, int t) {
-        sort(cand.begin(),cand.end());
-        vector<int> ds;
+    vector<vector<int>> combinationSum2(vector<int>& cand, int target) {
         vector<vector<int>> ans;
-        find(0,ds,ans,cand,t);
+        vector<int> ds;
+        sort(cand.begin(),cand.end());
+        solve(0,ds,ans,target,cand);
         return ans;
     }
 };
