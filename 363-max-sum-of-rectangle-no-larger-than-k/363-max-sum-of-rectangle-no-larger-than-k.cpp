@@ -20,15 +20,12 @@ public:
                 {
                     int x = matrix[row][col2]-(col1>0?matrix[row][col1-1]:0);
                     sum+=x;
-                    // if(sum<k)
-                    //     ans = max(ans,sum);
-                    // if(sum-k==0)
-                    //     return k;
+                    if(sum==k)
+                        return k; //first opt
                     auto it = s.lower_bound(sum-k);
                     if(it!=s.end())
                     {
                         ans = max(ans,sum-*it);
-                        // cout<<ans<<endl;
                     }
                     s.insert(sum);
                 }
