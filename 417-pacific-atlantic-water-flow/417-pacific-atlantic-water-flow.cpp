@@ -1,45 +1,32 @@
 class Solution {
 public:
-    bool atlant(int i,int j,int k,vector<vector<int>> &h)
+    void dfs(int i,int j,int k,vector<vector<int>> &vis,vector<vector<int>> &h)
     {
-        if(i==h.size() || j==h[0].size())
-            return true;
-        if(i==-1 || j== -1 || h[i][j]>k)
-            return false;
-        int a = h[i][j];
-        h[i][j]=INT_MAX;
-        bool ans = false;
-        ans = ans || atlant(i-1,j,a,h);
-        ans = ans || atlant(i+1,j,a,h);
-        ans = ans || atlant(i,j-1,a,h);
-        ans = ans || atlant(i,j+1,a,h);
-        h[i][j] = a;
-        return ans;
-    }
-    bool pacific(int i,int j,int k,vector<vector<int>> &h)
-    {
-        if(i==-1 || j==-1)
-            return true;
-        if(i==h.size() || j==h[0].size() || h[i][j]>k)
-            return false;
-        int a = h[i][j];
-        h[i][j]=INT_MAX;
-        bool ans = false;
-        ans = ans || pacific(i-1,j,a,h);
-        ans = ans || pacific(i+1,j,a,h);
-        ans = ans || pacific(i,j-1,a,h);
-        ans = ans || pacific(i,j+1,a,h);
-        h[i][j] = a;
-        return ans;
+        if(min(i,j)<0 || i==h.size() || j==h[0].size() || vis[i][j] || h[i][j]<k) return;
+        vis[i][j] = 1;
+        dfs(i-1,j,h[i][j],vis,h);
+        dfs(i+1,j,h[i][j],vis,h);
+        dfs(i,j-1,h[i][j],vis,h);
+        dfs(i,j+1,h[i][j],vis,h);
     }
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& h) {
-        vector<vector<int>> ans;
         int n = h.size(),m=h[0].size();
+        vector<vector<int>> ans,pac(n,vector<int> (m,0)),atl(n,vector<int> (m,0));
+        for(int i=0;i<n;i++)
+        {
+            dfs(i,0,h[i][0],pac,h);
+            dfs(i,m-1,h[i][m-1],atl,h);
+        }
+        for(int i=0;i<m;i++)
+        {
+            dfs(0,i,h[0][i],pac,h);
+            dfs(n-1,i,h[n-1][i],atl,h);
+        }
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(pacific(i,j,h[i][j],h) && atlant(i,j,h[i][j],h))
+                if(pac[i][j] && atl[i][j])
                     ans.push_back({i,j});
             }
         }
