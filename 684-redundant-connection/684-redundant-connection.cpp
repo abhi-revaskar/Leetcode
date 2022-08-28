@@ -1,52 +1,42 @@
 class dsu{
-    public:
     vector<int> par,rank;
-    dsu(int n){
-        par.resize(n+1,0);
-        rank.resize(n+1,1);
-        for(int i=1;i<=n;i++)
-        {
-            par[i]=i;
-        }
-    }
-    int find(int node)
+    public:
+    dsu(int n)
     {
-        if(par[node]==node)
-            return node;
-        return par[node] = find(par[node]);
+        par.resize(n),rank.resize(n,1);
+        for(int i=0;i<n;i++)
+            par[i] = i;
     }
-    void add(int a,int b)
+    void add(int i,int j)
     {
-        int apar = find(a);
-        int bpar = find(b);
-        if(rank[apar]>=rank[bpar])
-        {
-            par[bpar] = apar;
-            rank[apar]+=rank[bpar];
-        }
+        int pari = find(i),parj = find(j);
+        if(rank[pari]>rank[parj]) //rank = depth
+            par[parj] = pari;
+        else if(rank[pari]<rank[parj])
+            par[pari] = parj;
         else
         {
-            par[apar] = bpar;
-            rank[bpar]+=rank[apar];
+            par[parj] = pari;
+            rank[pari]++;
         }
+    }
+    int find(int x)
+    {
+        if(par[x]==x)
+            return x;
+        return par[x] = find(par[x]);
     }
 };
 class Solution {
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        int n = edges.size();
-        dsu* obj = new dsu(n);
-        vector<int> ans;
-        for(auto &x:edges)
+        dsu *root = new dsu(edges.size()+1);
+        for(auto x:edges)
         {
-            if(obj->find(x[0])==obj->find(x[1]))
-            {
-                ans = x;
-                break;
-            }
-            else
-                obj->add(x[0],x[1]);
+            if(root->find(x[0])==root->find(x[1]))
+                return x;
+            root->add(x[0],x[1]);
         }
-        return ans;
+        return {};
     }
 };
