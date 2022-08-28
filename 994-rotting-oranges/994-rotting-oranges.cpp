@@ -1,7 +1,13 @@
 class Solution {
 public:
+    bool check(int i,int j,vector<vector<int>> &grid)
+    {
+        if(min(i,j)<0 || i==grid.size() || j==grid[0].size() || grid[i][j]!=1)
+            return false;
+        return true;
+    }
     int orangesRotting(vector<vector<int>>& grid) {
-        int rotten=0,fresh = 0,n=grid.size(),m=grid[0].size();
+        int fresh = 0, n = grid.size(),m=grid[0].size();
         queue<pair<int,int>> q;
         for(int i=0;i<n;i++)
         {
@@ -10,64 +16,47 @@ public:
                 if(grid[i][j]==1)
                     fresh++;
                 if(grid[i][j]==2)
-                {
-                    rotten++;
                     q.push({i,j});
-                }
             }
         }
-        // cout<<fresh<<" "<<rotten<<endl;
         if(fresh==0)
             return 0;
-        if(rotten == 0)
+        if(q.empty())
             return -1;
-        int ans = 0;
+        int ans = -1;
         while(!q.empty())
         {
-            int size = q.size();
-            while(size--)
+            ans++;
+            int s = q.size();
+            while(s--)
             {
-                auto top = q.front();
-                q.pop();
-                int r= top.first,c=top.second;
-                if(r>0 && grid[r-1][c]==1)                    
+                auto x = q.front();q.pop();
+                if(check(x.first-1,x.second,grid))
                 {
-                    q.push({r-1,c});
-                    grid[r-1][c]=2;
+                    q.push({x.first-1,x.second});
+                    grid[x.first-1][x.second]=2;
                 }
-                if(r<n-1 && grid[r+1][c]==1)                    
+                if(check(x.first+1,x.second,grid))
                 {
-                    q.push({r+1,c});
-                    grid[r+1][c]=2;
+                    q.push({x.first+1,x.second});
+                    grid[x.first+1][x.second]=2;
                 }
-                if(c>0 && grid[r][c-1]==1)                    
+                if(check(x.first,x.second-1,grid))
                 {
-                    q.push({r,c-1});
-                    grid[r][c-1]=2;
+                    q.push({x.first,x.second-1});
+                    grid[x.first][x.second-1]=2;
                 }
-                if(c<m-1 && grid[r][c+1]==1)                    
+                if(check(x.first,x.second+1,grid))
                 {
-                    q.push({r,c+1});
-                    grid[r][c+1]=2;
+                    q.push({x.first,x.second+1});
+                    grid[x.first][x.second+1]=2;
                 }
             }
-            if(!q.empty())
-                ans++;
-            // cout<<ans<<endl;
         }
-        fresh = 0;
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<m;j++)
-            {
-                if(grid[i][j]==1)
-                    fresh++;
-            }
-        }
-        // cout<<fresh;
-        if(fresh)
-            return -1;
+        for(auto x:grid)
+            for(auto y:x)
+                if(y==1)
+                    return -1;
         return ans;
     }
-    
 };
