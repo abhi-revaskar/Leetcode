@@ -1,38 +1,33 @@
 class Solution {
+    vector<int> topo;
 public:
-    vector<int> dfs;
-    void solve(int i,vector<vector<int>> &adj,vector<int> &vis,vector<int> &trav)
+    bool dfs(int i,vector<vector<int>> &adj,vector<int> &vis,vector<int> &done)
     {
         vis[i] = 1;
         for(auto x:adj[i])
         {
-            if(!vis[x])
-                solve(x,adj,vis,trav);
-            else if(!trav[x])
-            {
-                dfs.push_back(-1);
-                return;
-            }
+            if(!vis[x] && dfs(x,adj,vis,done))
+                return true;
+            if(vis[x] && !done[x])
+                return true;
         }
-        trav[i]=1;
-        dfs.push_back(i);
+        done[i] = 1;
+        topo.push_back(i);
+        return false;
     }
-    vector<int> findOrder(int n, vector<vector<int>>& prerequisites) {
+    vector<int> findOrder(int n, vector<vector<int>>& pre) {
         vector<vector<int>> adj(n);
-        for(auto x:prerequisites)
+        for(auto x:pre)
         {
             adj[x[1]].push_back(x[0]);
         }
-        vector<int> vis(n,0),trav(n,0);
+        vector<int> vis(n,0),done(n,0);
         for(int i=0;i<n;i++)
         {
-            if(!vis[i])
-                solve(i,adj,vis,trav);
-        }
-        reverse(dfs.begin(),dfs.end());
-        for(auto x:dfs)
-            if(x==-1)
+            if(!vis[i] && dfs(i,adj,vis,done))
                 return {};
-        return dfs;
+        }
+        reverse(topo.begin(),topo.end());
+        return topo;
     }
 };
