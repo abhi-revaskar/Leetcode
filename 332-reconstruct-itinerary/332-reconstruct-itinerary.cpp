@@ -7,19 +7,23 @@ class Solution {
         return a[1]<b[1];
     }
 public:
-    vector<string> dfs(string src,unordered_map<string,vector<string>> mp,vector<string> ans)
+    vector<string> dfs(string src,unordered_map<string,vector<string>> &mp,vector<string> ans)
     {
         ans.push_back(src);
-        unordered_map<string,vector<string>> temp = mp;
+        // unordered_map<string,vector<string>> temp = mp;
         for(int i=0;i<mp[src].size();i++) //use begin
         {
             auto nbr = mp[src][i];
-            auto it = temp[src].begin()+i;
-            temp[src].erase(it);
-            vector<string> ret = dfs(nbr,temp,ans);
+            if(nbr=="")
+                continue;
+            mp[src][i] = "";
+            // auto it = temp[src].begin()+i;
+            // temp[src].erase(it);
+            vector<string> ret = dfs(nbr,mp,ans);
             if(ret.size()==n+1)
                 return ret;
-            temp[src].insert(it,nbr);
+            // temp[src].insert(it,nbr);
+            mp[src][i] = nbr;
         }
         return ans;
     }
