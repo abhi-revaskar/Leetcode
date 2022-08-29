@@ -7,9 +7,10 @@ class Solution {
         return a[1]<b[1];
     }
 public:
-    vector<string> dfs(string src,unordered_map<string,vector<string>> &mp,vector<string> ans)
+    void dfs(string src,unordered_map<string,vector<string>> &mp,vector<string> &ans)
     {
         ans.push_back(src);
+        vector<string> temp = ans;
         // unordered_map<string,vector<string>> temp = mp;
         for(int i=0;i<mp[src].size();i++) //use begin
         {
@@ -19,13 +20,13 @@ public:
             mp[src][i] = "";
             // auto it = temp[src].begin()+i;
             // temp[src].erase(it);
-            vector<string> ret = dfs(nbr,mp,ans);
-            if(ret.size()==n+1)
-                return ret;
+            dfs(nbr,mp,ans);
+            if(ans.size()==n+1)
+                return;
             // temp[src].insert(it,nbr);
             mp[src][i] = nbr;
+            ans = temp;
         }
-        return ans;
     }
     vector<string> findItinerary(vector<vector<string>>& tickets) {
         vector<string> ans;
@@ -36,7 +37,7 @@ public:
         {
             mp[x[0]].push_back(x[1]);
         }
-        ans = dfs("JFK",mp,ans);
+        dfs("JFK",mp,ans);
         return ans;
     }
 };
