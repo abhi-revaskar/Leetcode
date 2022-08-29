@@ -19,9 +19,9 @@ public:
                 // if(dist[u]!=top.first)
                 //     cout<<u<<" "<<dist[u]<<endl;
                 int v = nbr.first, w = nbr.second;
-                if(dist[u]+w<dist[v])
+                if(top.first+w<dist[v])
                 {
-                    dist[v] = dist[u] + w;
+                    dist[v] = top.first + w;
                     pq.push({dist[v],v});
                 }
             }
