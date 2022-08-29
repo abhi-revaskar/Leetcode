@@ -1,21 +1,20 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& flights, int src, int dst, int k) {
-        vector<int> dist(n,1e8),temp;
-        dist[src]=0;
-        temp=dist;
+        vector<int> dp(n,1000000),temp;
+        dp[src] = 0;
+        temp = dp;
         for(int i=0;i<=k;i++)
         {
             for(auto x:flights)
             {
                 int u = x[0],v=x[1],w=x[2];
-                if(temp[v]>dist[u]+w)
-                    temp[v]=dist[u]+w;
+                temp[v] = min(temp[v],dp[u]+w);
             }
-            dist=temp;
+            dp = temp;
         }
-        // for(auto x:dist)
-        //     cout<<x<<" ";
-        return (dist[dst]==1e8)?-1:dist[dst];
+        if(dp[dst]==1000000)
+            return -1;
+        return dp[dst];
     }
 };
