@@ -1,14 +1,14 @@
 class Solution {
 public:
     int ladderLength(string root, string end, vector<string>& list) {
-        unordered_map<string,vector<char>> mp;
+        unordered_map<string,vector<string>> mp;
         for(auto x:list)
         {
             for(int i=0;i<x.length();i++)
             {
                 string t = x;
                 t[i] = '*';
-                mp[t].push_back(x[i]);
+                mp[t].push_back(x);
             }
         }
         unordered_set<string> vis;
@@ -31,12 +31,10 @@ public:
                     wild[i] = '*';
                     for(auto x:mp[wild])
                     {
-                        string nbr = wild;
-                        nbr[i] = x;
-                        if(vis.count(nbr)==0)
+                        if(vis.count(x)==0)
                         {
-                            q.push(nbr);
-                            vis.insert(nbr);
+                            q.push(x);
+                            vis.insert(x);
                         }
                     }
                 }
