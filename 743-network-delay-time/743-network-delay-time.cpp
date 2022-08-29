@@ -1,22 +1,28 @@
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        vector<int> dist(n+1,1000);
+        vector<long long> dist(n+1,INT_MAX);
         dist[k]=0;
         for(int i=0;i<n;i++)
         {
-            for(int edge=0;edge<times.size();edge++)
+            int f = 0;
+            for(auto edge:times)
             {
-                int u = times[edge][0];
-                int v = times[edge][1];
-                int w = times[edge][2];
-                if(dist[v]>dist[u]+w)
-                    dist[v]=dist[u]+w;
+                int u = edge[0],v = edge[1],w = edge[2];
+                if(dist[u]+w<dist[v])
+                {
+                    dist[v] = dist[u] + w;
+                    f = 1;
+                }
             }
+            if(!f)
+                break;
         }
-        int ans =INT_MIN;
+        long long ans = INT_MIN;
         for(int i=1;i<=n;i++)
             ans = max(ans,dist[i]);
-        return (ans==1000)?-1:ans;
+        if(ans == INT_MAX)
+            return -1;
+        return ans;
     }
 };
