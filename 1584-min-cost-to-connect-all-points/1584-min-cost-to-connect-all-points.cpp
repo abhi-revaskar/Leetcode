@@ -12,17 +12,18 @@ public:
                 adj[j].push_back({i,dist});                    
             }
         }
-        int ans = 0;
+        int ans = 0,cnt=0;
         priority_queue<pair<int,int>> pq;
         pq.push({0,0});
         vector<bool> vis(n,0);
         // vis[0]=1;
-        while(!pq.empty())
+        while(cnt!=n)
         {
             auto top = pq.top();pq.pop();
             if(vis[top.second])
                 continue;
             vis[top.second] = 1;
+            cnt++;
             ans-=top.first;
             for(auto nbr:adj[top.second])
             {
