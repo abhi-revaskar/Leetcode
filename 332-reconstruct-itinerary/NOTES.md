@@ -1,0 +1,3 @@
+[["EZE","AXA"],["TIA","ANU"],["ANU","JFK"],["JFK","ANU"],["ANU","EZE"],["TIA","ANU"],["AXA","TIA"],["TIA","JFK"],["ANU","TIA"],["JFK","TIA"]]
+[["JFK","KUL"],["JFK","NRT"],["NRT","JFK"]]
+[["MEL","PER"],["SYD","CBR"],["AUA","DRW"],["JFK","EZE"],["PER","AXA"],["DRW","AUA"],["EZE","SYD"],["AUA","MEL"],["DRW","AUA"],["PER","ANU"],["CBR","EZE"],["EZE","PER"],["MEL","EZE"],["EZE","MEL"],["EZE","TBI"],["ADL","DRW"],["ANU","EZE"],["AXA","ADL"]]
