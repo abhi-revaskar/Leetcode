@@ -20,19 +20,20 @@ public:
             return false;
         sort(nums.begin(),nums.end());
         // return solve(0,sum/2,nums);
-        vector<vector<int>> dp(n+1,vector<int> (sum/2+1,0));
-        dp[0][0]=1;
+        vector<int> prev(sum/2+1,0),dp(sum/2+1,0);
+        prev[0] = 1;
         for(int i=1;i<=n;i++)
         {
-            dp[i][0]=1;
+            dp[0]=1;
             for(int j=1;j<=sum/2;j++)
             {
                 if(j<nums[i-1])
-                    dp[i][j] = dp[i-1][j]; //cant include
+                    dp[j] = prev[j]; //cant include
                 else
-                    dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]];
+                    dp[j] = prev[j] || prev[j-nums[i-1]];
             }
+            prev = dp;
         }
-        return dp.back().back();
+        return prev.back();
     }
 };
