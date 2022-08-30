@@ -22,7 +22,15 @@ public:
         return dp[i] = check(i,1,s)*solve(i+1,s)+check(i,2,s)*solve(i+2,s);
     }
     int numDecodings(string s) {
-        memset(dp,-1,sizeof(dp));
-        return solve(0,s);
+        // memset(dp,-1,sizeof(dp));
+        // return solve(0,s);
+        int next2 = 1,next1 = 1,n=s.length();
+        for(int i=n-1;i>=0;i--)
+        {
+            int curr = check(i,1,s)*next1+check(i,2,s)*next2;
+            next2 = next1;
+            next1 = curr;
+        }
+        return next1;
     }
 };
