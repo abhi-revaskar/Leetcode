@@ -1,1 +1,1 @@
-​
+For each position from i =1 to len(s), we mark as true if a valid segment ends here. For each i we check from i to 0 if another valid segment is present there or not and also if the substr from that valid segment is till i is present in the hashmap or not. If it is then we mark dp[i] as true.
