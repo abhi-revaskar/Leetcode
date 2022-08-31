@@ -17,18 +17,14 @@ public:
     int maxProfit(vector<int>& prices) {
         // memset(dp,-1,sizeof(dp));
         // return solve(0,1,prices);
-        int n = prices.size();
-        vector<vector<int>> dp(n+2,vector<int> (2,0));
+        int n = prices.size(),nxt10=0,nxt11=0,nxt21=0;
+        // vector<vector<int>> dp(n+2,vector<int> (2,0));
         for(int i=n-1;i>=0;i--)
         {
-            for(int j=0;j<2;j++)
-            {
-                if(j)
-                    dp[i][j] = max(dp[i+1][1],dp[i+1][0]-prices[i]);
-                else
-                    dp[i][j] = max(dp[i+1][0],dp[i+2][1]+prices[i]);
-            }
+            int curr1 = max(nxt11,nxt10-prices[i]);
+            int curr0 = max(nxt10,nxt21+prices[i]);
+            nxt21 = nxt11,nxt11=curr1,nxt10=curr0;
         }
-        return dp[0][1];
+        return nxt11;
     }
 };
