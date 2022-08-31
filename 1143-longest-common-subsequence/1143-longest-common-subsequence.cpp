@@ -12,7 +12,22 @@ public:
         return dp[i][j] = max(solve(i,j+1,t1,t2),solve(i+1,j,t1,t2));
     }
     int longestCommonSubsequence(string t1, string t2) {
-        memset(dp,-1,sizeof(dp));
-        return solve(0,0,t1,t2);
+        // memset(dp,-1,sizeof(dp));
+        // return solve(0,0,t1,t2);
+        int n = t1.length(),m = t2.length();
+        vector<int> dp(m+1,0),prev(m+1,0);
+        for(int i=1;i<=n;i++)
+        {
+            dp[0] = 0;
+            for(int j=1;j<=m;j++)
+            {
+                if(t1[i-1]==t2[j-1])
+                    dp[j] = 1 + prev[j-1];
+                else
+                    dp[j] = max(dp[j-1],prev[j]);
+            }
+            prev = dp;
+        }
+        return prev.back();
     }
 };
