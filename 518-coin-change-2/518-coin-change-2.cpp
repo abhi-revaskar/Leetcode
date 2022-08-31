@@ -16,18 +16,21 @@ public:
         // memset(dp,-1,sizeof(dp));
         // return solve(0,amt,coins);
         int n = coins.size();
-        vector<vector<int>> dp(n+1,vector<int> (amt+1,0));
-        for(int i=1;i<=n;i++)
+        // vector<vector<int>> dp(n+1,vector<int> (amt+1,0));
+        vector<int> dp(amt+1,0),prev(amt+1,0);
+        prev[0] = 1;
+        for(int i=0;i<n;i++)
         {
-            dp[i][0] = 1;
+            dp[0] = 1;
             for(int j=1;j<=amt;j++)
             {
-                if(j<coins[i-1])
-                    dp[i][j] = dp[i-1][j];
+                if(j<coins[i])
+                    dp[j] = prev[j];
                 else
-                    dp[i][j] = dp[i-1][j]+dp[i][j-coins[i-1]];
+                    dp[j] = prev[j]+dp[j-coins[i]];
             }
+            prev = dp;
         }
-        return dp.back().back();
+        return prev.back();
     }
 };
