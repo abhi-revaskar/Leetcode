@@ -1,12 +1,12 @@
 class Solution {
 public:
     int uniquePaths(int m, int n) {
-        long long ans = 1;
-        long long multi = m+n-2;
-        for(int i=1;i<min(m,n);i++)
+        long long num = n,ans=1;
+        for(int i=1;i<=m-1;i++)
         {
-            ans = ans*multi/(1LL*i);
-            multi--;
+            ans*=(num);
+            ans/=i;
+            num++;
         }
         return ans;
     }
