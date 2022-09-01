@@ -11,19 +11,11 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,int maxi,int &ans)
-    {
+    int goodNodes(TreeNode* root,int maxi=INT_MIN) {
         if(!root)
-            return;
-        if(root->val>=maxi)
-            ans++;
-        maxi = max(maxi,root->val);
-        solve(root->left,maxi,ans);
-        solve(root->right,maxi,ans);
-    }
-    int goodNodes(TreeNode* root) {
-        int ans = 0;
-        solve(root,INT_MIN,ans);
-        return ans;
+            return 0;
+        int ans = root->val>=maxi;
+        maxi = max(root->val,maxi);
+        return ans+goodNodes(root->left,maxi)+goodNodes(root->right,maxi);
     }
 };
