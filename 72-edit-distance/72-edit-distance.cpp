@@ -17,20 +17,21 @@ public:
         // memset(dp,-1,sizeof(dp));
         // return solve(0,0,s,t);
         int n=s.length(),m = t.length();
-        vector<vector<int>> dp(n+1,vector<int> (m+1,0));
-        for(int i=0;i<=m;i++)
-            dp[0][i] = i;
+        vector<int> dp(m+1,0),prev(m+1,0);
+        for(int i=1;i<=m;i++)
+            prev[i]=i;
         for(int i=1;i<=n;i++)
         {
-            dp[i][0]=i;
+            dp[0]=i;
             for(int j=1;j<=m;j++)
             {
-                if(s[i-1]==t[j-1])
-                    dp[i][j] = dp[i-1][j-1];
+                if(s[i-1]!=t[j-1])
+                    dp[j] = 1+min(dp[j-1],min(prev[j-1],prev[j]));
                 else
-                    dp[i][j] = 1+min(dp[i-1][j],min(dp[i-1][j-1],dp[i][j-1]));
+                    dp[j] = prev[j-1];
             }
+            prev = dp;
         }
-        return dp.back().back();
+        return prev.back();
     }
 };
