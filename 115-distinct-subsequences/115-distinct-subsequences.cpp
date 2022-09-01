@@ -14,21 +14,14 @@ public:
         return dp[i][j] = solve(i+1,j,s,t)+solve(i+1,j+1,s,t);
     }
     int numDistinct(string s, string t) {
-        memset(dp,-1,sizeof(dp));
-        return solve(0,0,s,t);
-        // vector<vector<int>> dp(s.length()+1,vector<int> (t.length()+1,0));
-        // dp[0][0]=1;
-        // for(int i=1;i<=s.length();i++)
-        // {
-        //     dp[i][0]=1;
-        //     for(int j=1;j<=t.length();j++)
-        //     {
-        //         if(s[i-1]==t[j-1])
-        //             dp[i][j] = dp[i-1][j]+dp[i-1][j-1];
-        //         else
-        //             dp[i][j] = dp[i-1][j];
-        //     }
-        // }
-        // return dp.back().back();
+        // memset(dp,-1,sizeof(dp));
+        // return solve(0,0,s,t);
+        int m = t.length(), n = s.length();
+        vector<vector<unsigned>> dp(m + 1, vector<unsigned> (n + 1, 0));
+        for (int j = 0; j <= n; j++) dp[0][j] = 1;
+        for (int j = 1; j <= n; j++)
+            for (int i = 1; i <= m; i++)
+                dp[i][j] = dp[i][j-1] + (t[i-1] == s[j-1] ? dp[i-1][j-1] : 0);
+        return dp[m][n];
     }
 };
