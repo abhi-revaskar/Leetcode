@@ -1,7 +1,7 @@
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int grpsize) {
-        unordered_map<long long,long long> mp;
+        unordered_map<int,int> mp;
         sort(hand.begin(),hand.end());
         if(hand.size()%grpsize)
             return false;
