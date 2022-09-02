@@ -3,6 +3,8 @@ public:
     bool isNStraightHand(vector<int>& hand, int grpsize) {
         unordered_map<long long,long long> mp;
         sort(hand.begin(),hand.end());
+        if(hand.size()%grpsize)
+            return false;
         for(auto x:hand)
             mp[x]++;
         for(auto x:hand)
