@@ -2,7 +2,7 @@ class Solution {
 public:
     bool mergeTriplets(vector<vector<int>>& triplets, vector<int>& t) {
         vector<int> comp(3,INT_MIN);
-        for(auto x:triplets)
+        for(auto &x:triplets)
         {
             if(x[0]<=t[0] && x[1]<=t[1] && x[2]<=t[2])
             {
