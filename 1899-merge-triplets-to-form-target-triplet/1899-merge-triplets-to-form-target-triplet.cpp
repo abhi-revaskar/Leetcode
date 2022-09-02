@@ -11,6 +11,6 @@ public:
                 comp[2] = max(comp[2],x[2]);
             }
         }
-        return comp[0]==t[0] && comp[1] == t[1] && comp[2] == t[2];
+        return comp==t;
     }
 };
