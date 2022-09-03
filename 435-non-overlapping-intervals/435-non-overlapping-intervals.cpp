@@ -1,19 +1,19 @@
 class Solution {
 public:
-    static bool comp(vector<int> &a,vector<int> &b)
-    {
-        return a[1]<b[1];
-    }
-    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
-        int ans = 0;
-        sort(intervals.begin(),intervals.end(),comp);
-        int last_interval = intervals[0][1];
-        for(int i=1;i<intervals.size();i++)
+    int eraseOverlapIntervals(vector<vector<int>>& ints) {
+        sort(ints.begin(),ints.end());
+        int i=0,ans=0;
+        for(int j=1;j<ints.size();j++)
         {
-            if(intervals[i][0]<last_interval)
-                ans++;
+            auto x = ints[i],y = ints[j];
+            if(x[1]<=y[0])
+                i=j;
             else
-                last_interval = intervals[i][1];
+            {
+                ans++;
+                if(x[1]>y[1])
+                    i=j;
+            }
         }
         return ans;
     }
