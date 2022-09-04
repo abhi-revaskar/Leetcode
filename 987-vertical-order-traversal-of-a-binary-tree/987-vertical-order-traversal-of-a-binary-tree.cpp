@@ -10,30 +10,30 @@
  * };
  */
 class Solution {
+    map<int,map<int,multiset<int>>> mp;
 public:
-    void solve(TreeNode* root,int vert,int level,map<int,map<int,multiset<int>>> &mp)
+    void solve(int row,int col,TreeNode* root)
     {
         if(!root)
             return;
-        mp[vert][level].insert(root->val);
-        solve(root->left,vert-1,level+1,mp);
-        solve(root->right,vert+1,level+1,mp);
+        mp[col][row].insert(root->val);
+        solve(row+1,col-1,root->left);
+        solve(row+1,col+1,root->right);
     }
     vector<vector<int>> verticalTraversal(TreeNode* root) {
+        solve(0,0,root);
         vector<vector<int>> ans;
-        map<int,map<int,multiset<int>>> mp;
-        solve(root,0,0,mp);
-        
-        for(auto x:mp)
+        for(auto col:mp)
         {
-            vector<int> t;
-            for(auto y:x.second)
+            vector<int> colvals;
+            for(auto row:col.second)
             {
-                for(auto val:y.second)
-                    t.push_back(val);
-                
+                for(auto x:row.second)
+                {
+                    colvals.push_back(x);
+                }
             }
-            ans.push_back(t);
+            ans.push_back(colvals);
         }
         return ans;
     }
