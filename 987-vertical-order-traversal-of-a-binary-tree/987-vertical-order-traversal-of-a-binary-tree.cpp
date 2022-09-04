@@ -23,12 +23,12 @@ public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
         solve(0,0,root);
         vector<vector<int>> ans;
-        for(auto col:mp)
+        for(auto &col:mp)
         {
             vector<int> colvals;
-            for(auto row:col.second)
+            for(auto &row:col.second)
             {
-                for(auto x:row.second)
+                for(auto &x:row.second)
                 {
                     colvals.push_back(x);
                 }
