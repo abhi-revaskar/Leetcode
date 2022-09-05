@@ -1,22 +1,19 @@
 class Solution {
 public:
     bool isHappy(int n) {
-        unordered_set<int> s;
-        while(true)
+        string s = to_string(n);
+        unordered_set<string> set;
+        set.insert(s);
+        while(s!="1")
         {
-            if(s.count(n))
+            int newno = 0;
+            for(auto x:s)
+                newno+=(x-'0')*(x-'0');
+            s = to_string(newno);
+            if(set.count(s))
                 return false;
-            s.insert(n);
-            int newno=0;
-            while(n)
-            {
-                int dig=n%10;
-                n/=10;
-                newno+=dig*dig;
-            }
-            if(newno==1)
-                return true;
-            n=newno;
+            set.insert(s);
         }
+        return true;
     }
 };
