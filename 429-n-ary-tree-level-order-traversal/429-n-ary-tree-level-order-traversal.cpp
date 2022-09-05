@@ -34,7 +34,7 @@ public:
             {
                 auto top = q.front();q.pop();
                 nodes.push_back(top->val);
-                for(auto child:top->children)
+                for(auto &child:top->children)
                 {
                     q.push(child);
                 }
