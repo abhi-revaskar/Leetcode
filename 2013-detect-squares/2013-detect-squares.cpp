@@ -1,16 +1,14 @@
 class DetectSquares {
     unordered_map<int,unordered_multiset<int>> points;
-    vector<vector<int>> hori,vert;
+    vector<vector<int>> vert;
 public:
     DetectSquares() {
-        hori.resize(1001);
         vert.resize(1001);
     }
     
     void add(vector<int> point) {
         int x = point[0], y = point[1];
         points[x].insert(y);
-        hori[y].push_back(x);
         vert[x].push_back(y);
     }
     
