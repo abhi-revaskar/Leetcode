@@ -23,7 +23,23 @@ public:
     vector<int> inorderTraversal(TreeNode* root) {
         if(!root)
             return ans;
-        solve(root);
+        // solve(root);
+        // return ans;
+        TreeNode* t = root;
+        stack<TreeNode*> st;
+        while(true)
+        {
+            while(t)
+            {
+                st.push(t);
+                t = t->left;
+            }
+            if(st.empty())
+                break;
+            t = st.top();st.pop();
+            ans.push_back(t->val);
+            t = t->right;
+        }
         return ans;
     }
 };
