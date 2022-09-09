@@ -7,7 +7,7 @@ public:
         return a[1]>b[1];
     }
     int maxEnvelopes(vector<vector<int>>& env) {
-        for(auto x:env)
+        for(auto &x:env)
             swap(x[0],x[1]);
         sort(env.begin(),env.end(),comp);
         vector<int> lis;
