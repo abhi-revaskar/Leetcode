@@ -1,6 +1,16 @@
 class NumArray {
     vector<int> bit,A;
     int n;
+    int sum(int i){
+        i++;
+        int ans = 0;
+        while(i)
+        {
+            ans+=bit[i];
+            i = i-(i&(-i));//removing last set bit
+        }
+        return ans;
+    }
 public:
     NumArray(vector<int>& nums) {
         A.resize(nums.size(),0);
@@ -19,17 +29,6 @@ public:
             bit[index]+=val;
             index = index+(index&(-index));//adding last set bit
         }
-    }
-    
-    int sum(int i){
-        i++;
-        int ans = 0;
-        while(i)
-        {
-            ans+=bit[i];
-            i = i-(i&(-i));//removing last set bit
-        }
-        return ans;
     }
     
     int sumRange(int left, int right) {
