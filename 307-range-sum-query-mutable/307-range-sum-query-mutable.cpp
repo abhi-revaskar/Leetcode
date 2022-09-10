@@ -1,52 +1,51 @@
-class fn{
-    public:
-    vector<int> tree,arr;
-    fn(vector<int>& nums) {
-        arr.resize(nums.size(),0);
-        tree.resize(arr.size()+1,0);
-        for(int i=0;i<arr.size();i++)
-        {
-            update(i,nums[i]);
-            // cout<<tree[i]<<endl;
-        }
-    }
-    
-    void update(int index, int val) {
-        int add = val-arr[index];
-        arr[index]=val;
-        index++;
-        while(index<=arr.size())
-        {
-            tree[index]+=add;
-            index+=index&-index;
-        }
-        
-    }
-    int sum(int index)
-    {
-        index++;
+class NumArray {
+    vector<int> bit;
+    int n;
+    int sum(int i){
+        i++;
         int ans = 0;
-        while(index)
+        while(i)
         {
-            ans+=tree[index];
-            index=index&(index-1);
+            ans+=bit[i];
+            i = i-(i&(-i));//removing last set bit
         }
         return ans;
     }
-};
-class NumArray {
 public:
-    fn *obj;
+    vector<int> A;
     NumArray(vector<int>& nums) {
-        obj=new fn(nums);
+        A.resize(nums.size(),0);
+        bit.resize(nums.size()+1,0);
+        n = nums.size()+1;
+        for(int i=0;i<nums.size();i++)
+            update(i,nums[i]);
     }
     
     void update(int index, int val) {
-        obj->update(index,val);
-        
+        val = val-A[index];
+        A[index] +=val;
+        index++;
+        while(index<n)
+        {
+            bit[index]+=val;
+            index = index+(index&(-index));//adding last set bit
+        }
     }
+    
     int sumRange(int left, int right) {
-        return (obj->sum(right))-(obj->sum(left-1));
+        int l = 0,r=0;
+        while(left)
+        {
+            l+=bit[left];
+            left = left-(left&(-left));
+        }
+        right++;
+        while(right)
+        {
+            r+=bit[right];
+            right = right - (right & (-right));
+        }
+        return r-l;
     }
 };
 
