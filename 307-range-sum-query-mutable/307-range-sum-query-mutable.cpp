@@ -1,7 +1,7 @@
 class NumArray {
-public:
     vector<int> bit,A;
     int n;
+public:
     NumArray(vector<int>& nums) {
         A.resize(nums.size(),0);
         bit.resize(nums.size()+1,0);
