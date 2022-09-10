@@ -1,18 +1,7 @@
 class NumArray {
-    vector<int> bit;
-    int n;
-    int sum(int i){
-        i++;
-        int ans = 0;
-        while(i)
-        {
-            ans+=bit[i];
-            i = i-(i&(-i));//removing last set bit
-        }
-        return ans;
-    }
 public:
-    vector<int> A;
+    vector<int> bit,A;
+    int n;
     NumArray(vector<int>& nums) {
         A.resize(nums.size(),0);
         bit.resize(nums.size()+1,0);
@@ -24,7 +13,7 @@ public:
     void update(int index, int val) {
         val = val-A[index];
         A[index] +=val;
-        index++;
+        index++; //1-based indexing
         while(index<n)
         {
             bit[index]+=val;
@@ -32,20 +21,19 @@ public:
         }
     }
     
+    int sum(int i){
+        i++;
+        int ans = 0;
+        while(i)
+        {
+            ans+=bit[i];
+            i = i-(i&(-i));//removing last set bit
+        }
+        return ans;
+    }
+    
     int sumRange(int left, int right) {
-        int l = 0,r=0;
-        while(left)
-        {
-            l+=bit[left];
-            left = left-(left&(-left));
-        }
-        right++;
-        while(right)
-        {
-            r+=bit[right];
-            right = right - (right & (-right));
-        }
-        return r-l;
+        return sum(right) - sum(left-1);
     }
 };
 
