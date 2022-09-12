@@ -33,7 +33,7 @@ public:
         bit.resize(n+1,0);
         for(auto x:nums)
         {
-            int idx = lower_bound(sorted.begin(),sorted.end(),2LL*x+1)-sorted.begin();
+            int idx = upper_bound(sorted.begin(),sorted.end(),2LL*x)-sorted.begin();
             if(idx<n)
             ans+=query(idx,n-1);
             idx = lower_bound(sorted.begin(),sorted.end(),x)-sorted.begin();
