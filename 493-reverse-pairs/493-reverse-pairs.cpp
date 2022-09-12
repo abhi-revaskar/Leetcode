@@ -1,21 +1,43 @@
-#include <ext/pb_ds/assoc_container.hpp> // Common file
-#include <ext/pb_ds/tree_policy.hpp> // Including tree_order_statistics_node_update
-#include <ext/pb_ds/detail/standard_policies.hpp>
-using namespace __gnu_pbds;
-#define ll long long
-typedef tree<pair<ll,ll>, null_type, less<pair<ll,ll>>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
-
 class Solution {
+    vector<int> bit;
+    
+    void update(int i)
+    {
+        i++;
+        while(i<bit.size())
+        {
+            bit[i]++;
+            i = i+(i&-i);
+        }
+    }
+    int sum(int i)
+    {
+        i++;
+        int ans = 0;
+        while(i)
+        {
+            ans+=bit[i];
+            i -= i&-i;
+        }
+        return ans;
+    }
+    int query(int l,int r)
+    {
+        return sum(r)- sum(l-1);
+    }
 public:
     int reversePairs(vector<int>& nums) {
-        ordered_set s;
-        int ans = 0;
-        s.insert({nums[0],0});
-        for(int i=1;i<nums.size();i++)
+        vector<int> sorted(nums);
+        int n = nums.size(),ans = 0;
+        sort(sorted.begin(),sorted.end());
+        bit.resize(n+1,0);
+        for(auto x:nums)
         {
-            int cnt = s.size()-s.order_of_key({2LL*nums[i]+1,-1});
-            ans+=cnt;
-            s.insert({nums[i],i});
+            int idx = lower_bound(sorted.begin(),sorted.end(),2LL*x+1)-sorted.begin();
+            if(idx<n)
+            ans+=query(idx,n-1);
+            idx = lower_bound(sorted.begin(),sorted.end(),x)-sorted.begin();
+            update(idx);
         }
         return ans;
     }
