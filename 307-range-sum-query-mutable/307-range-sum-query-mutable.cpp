@@ -1,38 +1,53 @@
 class NumArray {
-    vector<int> bit,A;
+    vector<int> st;
     int n;
-    int sum(int i){
-        i++;
-        int ans = 0;
-        while(i)
-        {
-            ans+=bit[i];
-            i = i-(i&(-i));//removing last set bit
-        }
-        return ans;
-    }
 public:
     NumArray(vector<int>& nums) {
-        A.resize(nums.size(),0);
-        bit.resize(nums.size()+1,0);
-        n = nums.size()+1;
-        for(int i=0;i<nums.size();i++)
-            update(i,nums[i]);
+        n = nums.size();
+        st.assign(15*1e4,0);
+        build(1,0,n-1,nums);
     }
-    
-    void update(int index, int val) {
-        val = val-A[index];
-        A[index] +=val;
-        index++; //1-based indexing
-        while(index<n)
+    void build(int v,int tl,int tr,vector<int> &nums)
+    {
+        if(tl==tr)
         {
-            bit[index]+=val;
-            index = index+(index&(-index));//adding last set bit
+            st[v] = nums[tl];
+            return;
         }
+        int mid = (tl+tr)/2;
+        build(2*v+1,tl,mid,nums);
+        build(2*v+2,mid+1,tr,nums);
+        st[v] = st[2*v+1]+st[2*v+2];
     }
     
+    void update(int v,int tl,int tr,int i,int val)
+    {
+        if(tl==tr)
+        {
+            st[v] = val;
+            return;
+        }
+        int mid = (tl+tr)/2;
+        if(i<=mid)
+        update(2*v+1,tl,mid,i,val);
+        else
+        update(2*v+2,mid+1,tr,i,val);
+        st[v] = st[2*v+1]+st[2*v+2];
+    }
+    void update(int index, int val) {
+        update(1,0,n-1,index,val);
+    }
+    int sum(int v,int tl,int tr,int l,int r)
+    {
+        if(l>r)
+            return 0;
+        if(tl==l && tr==r)
+            return st[v];
+        int tm = (tl+tr)/2;
+        return sum(2*v+1,tl,tm,l,min(r,tm))+sum(2*v+2,tm+1,tr,max(l,tm+1),r);
+    }
     int sumRange(int left, int right) {
-        return sum(right) - sum(left-1);
+        return sum(1,0,n-1,left,right);
     }
 };
 
