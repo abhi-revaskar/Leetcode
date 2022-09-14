@@ -1,99 +1,53 @@
 class NumArray {
-    struct segmenttree {
-	int n;
-	vector<int> st;
-
-	void init(int _n) {
-		this->n = _n;
-		st.resize(4 * n, 0);
-	}
-
-	void build(int start, int ending, int node, vector<int> &v) {
-		// leaf node base case
-		if (start == ending) {
-			st[node] = v[start];
-			return;
-		}
-
-		int mid = (start + ending) / 2;
-
-		// left subtree is (start,mid)
-		build(start, mid, 2 * node + 1, v);
-
-		// right subtree is (mid+1,ending)
-		build(mid + 1, ending, 2 * node + 2, v);
-
-		st[node] = st[node * 2 + 1] + st[node * 2 + 2];
-	}
-
-	int query(int start, int ending, int l, int r, int node) {
-		// non overlapping case
-		if (start > r || ending < l) {
-			return 0;
-		}
-
-		// complete overlap
-		if (start >= l && ending <= r) {
-			return st[node];
-		}
-
-		// partial case
-		int mid = (start + ending) / 2;
-
-		int q1 = query(start, mid, l, r, 2 * node + 1);
-		int q2 = query(mid + 1, ending, l, r, 2 * node + 2);
-
-		return q1 + q2;
-	}
-
-	void update(int start, int ending, int node, int index, int value) {
-		// base case
-		if (start == ending) {
-			st[node] = value;
-			return;
-		}
-
-		int mid = (start + ending) / 2;
-		if (index <= mid) {
-			// left subtree
-			update(start, mid, 2 * node + 1, index, value);
-		}
-		else {
-			// right
-			update(mid + 1, ending, 2 * node + 2, index, value);
-		}
-
-		st[node] = st[node * 2 + 1] + st[node * 2 + 2];
-
-		return;
-	}
-
-	void build(vector<int> &v) {
-		build(0, n - 1, 0, v);
-	}
-
-	int query(int l, int r) {
-		return query(0, n - 1, l, r, 0);
-	}
-
-	void update(int x, int y) {
-		update(0, n - 1, 0, x, y);
-	}
-};
-
+    vector<int> st;
+    int n;
 public:
-    segmenttree tree;
     NumArray(vector<int>& nums) {
-        tree.init(nums.size());
-        tree.build(nums);
+        n = nums.size();
+        st.assign(4*n,0);
+        build(1,0,n-1,nums);
+    }
+    void build(int v,int tl,int tr,vector<int> &nums)
+    {
+        if(tl==tr)
+        {
+            st[v] = nums[tl];
+            return;
+        }
+        int mid = (tl+tr)/2;
+        build(2*v,tl,mid,nums);
+        build(2*v+1,mid+1,tr,nums);
+        st[v] = st[2*v]+st[2*v+1];
     }
     
+    void update(int v,int tl,int tr,int i,int val)
+    {
+        if(tl==tr)
+        {
+            st[v] = val;
+            return;
+        }
+        int mid = (tl+tr)/2;
+        if(i<=mid)
+        update(2*v,tl,mid,i,val);
+        else
+        update(2*v+1,mid+1,tr,i,val);
+        st[v] = st[2*v]+st[2*v+1];
+    }
     void update(int index, int val) {
-        tree.update(index,val);
+        update(1,0,n-1,index,val);
     }
-    
+    int sum(int v,int tl,int tr,int l,int r)
+    {
+        if(l>r)
+            return 0;
+        if(tl==l && tr==r)
+            return st[v];
+        int tm = (tl+tr)/2;
+        return sum(2*v,tl,tm,l,min(r,tm))+sum(2*v+1,tm+1,tr,max(l,tm+1),r);
+    }
     int sumRange(int left, int right) {
-        return tree.query(left,right);
+        return sum(1,0,n-1,left,right);
     }
 };
 
