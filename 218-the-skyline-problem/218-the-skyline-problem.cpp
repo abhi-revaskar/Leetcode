@@ -37,14 +37,23 @@ class Solution {
     }
 public:
     vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
-        vector<vector<int>> points,heights,ans;
-        vector<int> maxi;
-        unordered_set<int> starters,enders;
+        vector<vector<int>> heights,ans;
+        unordered_set<int> set;
+        vector<int> maxi,points;
         for(auto &x:buildings)
         {
-            points.push_back({x[0],0});
-            points.push_back({x[1],1});
-            points.push_back({x[0],-1});
+            if(set.count(x[0])==0)
+            {
+                points.push_back(x[0]);
+                points.push_back(x[0]);
+                set.insert(x[0]);
+            }
+            if(set.count(x[1])==0)
+            {
+                points.push_back(x[1]);
+                points.push_back(x[1]);
+                set.insert(x[1]);
+            }
             heights.push_back({x[2],x[0],x[1]});
         }
         sort(points.begin(),points.end());
@@ -54,13 +63,11 @@ public:
         marked.assign(4*n,0);
         for(auto &x:heights)
         {
-            vector<int> start = {x[1],0},ends = {x[2],1};
-            int l = lower_bound(begin(points),end(points),start)-begin(points);
-            int r = upper_bound(begin(points),end(points),ends)-begin(points);
-            r--;
+            int l = upper_bound(begin(points),end(points),x[1])-begin(points);
+            int r = lower_bound(begin(points),end(points),x[2])-begin(points);
+            l--;
             update(1,0,n-1,l,r,x[0]);
         }
-        int cnt=1;
         for(int i=0;i<n;i++)
         {
             maxi.push_back(query(1,0,n-1,i));
@@ -70,26 +77,9 @@ public:
             // cout<<points[i][0]<<" "<<points[i][1]<<" "<<maxi[i]<<endl;
             if(maxi[i]!=maxi[i-1])
             {
-                // cout<<i<<endl;
-                if(cnt==0)
-                {
-                    ans.push_back({points[i-1][0],0});
-                    ans.push_back({points[i][0],maxi[i]});
-                }
-                else
-                {
-                    if(maxi[i]>maxi[i-1])
-                        ans.push_back({points[i][0],maxi[i]});
-                    else
-                        ans.push_back({points[i-1][0],maxi[i]});
-                }
+                ans.push_back({points[i],maxi[i]});
             }
-            if(points[i][1]==0)
-                cnt++;
-            else if(points[i][1]==1)
-                cnt--;
         }
-        ans.push_back({points.back()[0],0});
         return ans;
     }
 };
