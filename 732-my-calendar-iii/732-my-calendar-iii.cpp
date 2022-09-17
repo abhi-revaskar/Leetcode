@@ -11,6 +11,7 @@ struct node{
     }
 };
 class MyCalendarThree {
+    map<int,int> mp;
     node *root;
 public:
     MyCalendarThree() {
@@ -60,8 +61,17 @@ public:
         return max(query(root->left,l,min(r,m)),query(root->right,max(l,m+1),r));
     }
     int book(int start, int end) {
-        update(root,start,end-1,1);
-        return root->val;
+        // update(root,start,end-1,1);
+        // return root->val;
+        int ans = 0,sum=0;
+        mp[start]++;
+        mp[end]--;
+        for(auto x:mp)
+        {
+            sum+=x.second;
+            ans = max(ans,sum);
+        }
+        return ans;
     }
 };
 
