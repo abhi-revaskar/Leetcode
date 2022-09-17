@@ -61,7 +61,7 @@ public:
     }
     int book(int start, int end) {
         update(root,start,end-1,1);
-        return query(root,0,1e9);
+        return root->val;
     }
 };
 
