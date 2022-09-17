@@ -9,8 +9,43 @@ public:
         for(int i=0;i<n;i++)
             occ[arr[i]].push_back(i);
     }
+    void build(int v,int l,int r,vector<int> &arr)
+    {
+        if(l==r)
+        {
+            mp[v][arr[l]]++;
+            return;
+        }
+        int m = (l+r)/2;
+        build(2*v,l,min(r,m),arr);
+        build(2*v+1,max(l,m+1),r,arr);
+        for(auto x:mp[2*v])
+        {
+            if(mp[v].count(x.first))
+                mp[v][x.first]+=x.second;
+            else
+                mp[v].insert({x.first,x.second});
+        }
+        for(auto x:mp[2*v+1])
+        {
+            if(mp[v].count(x.first))
+                mp[v][x.first]+=x.second;
+            else
+                mp[v].insert({x.first,x.second});
+        }
+    }
+    int query(int v,int tl,int tr,int l,int r,int val)
+    {
+        if(l>r)
+            return 0;
+        if(tl==l && tr==r)
+            return mp[v][val];
+        int tm = (tl+tr)/2; 
+        return query(2*v,tl,tm,l,min(r,tm),val)+query(2*v+1,tm+1,tr,max(l,tm+1),r,val);
+    }
     int query(int left, int right, int value) {
-        return upper_bound(begin(occ[value]),end(occ[value]),right)-lower_bound(begin(occ[value]),end(occ[value]),left);
+        // return query(1,0,n-1,left,right,value);
+        return upper_bound(occ[value].begin(),occ[value].end(),right)-lower_bound(occ[value].begin(),occ[value].end(),left);
     }
 };
 
