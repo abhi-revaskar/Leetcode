@@ -1,16 +1,42 @@
 class Solution {
 public:
     int findLength(vector<int>& nums1, vector<int>& nums2) {
-        vector<vector<int>> dp(nums1.size()+1,vector<int> (nums2.size()+1,0));
-        int ans = 0;
-        for(int i=1;i<=nums1.size();i++)
+        int ans = 0,n=nums1.size(),m = nums2.size();
+        for(int i=0;i<n;i++)
         {
-            for(int j = 1;j<=nums2.size();j++)
+            int tempans=0,maxcnt=0;
+            for(int j=0;j<m;j++)
             {
-                if(nums1[i-1]==nums2[j-1])
-                    dp[i][j] = dp[i-1][j-1]+1;
-                ans = max(ans,dp[i][j]);
+                if(i+j==n)
+                    break;
+                if(nums1[i+j]!=nums2[j])
+                {
+                    tempans = max(tempans,maxcnt);
+                    maxcnt=0;
+                }
+                else
+                maxcnt++;
             }
+            tempans = max(tempans,maxcnt);
+            ans = max(ans,tempans);
+        }
+        for(int i=0;i<m;i++)
+        {
+            int tempans=0,maxcnt=0;
+            for(int j=0;j<n;j++)
+            {
+                if(i+j==m)
+                    break;
+                if(nums2[i+j]!=nums1[j])
+                {
+                    tempans = max(tempans,maxcnt);
+                    maxcnt=0;
+                }
+                else
+                maxcnt++;
+            }
+            tempans = max(tempans,maxcnt);
+            ans = max(ans,tempans);
         }
         return ans;
     }
