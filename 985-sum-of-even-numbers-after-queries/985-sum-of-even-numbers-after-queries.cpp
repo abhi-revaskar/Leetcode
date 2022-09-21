@@ -3,10 +3,10 @@ public:
     vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
         int sumb4=0,n = nums.size();
         vector<int> ans;
-        for(auto x:nums)
+        for(auto &x:nums)
             if(x%2==0)
                 sumb4+=x;
-        for(auto x:queries)
+        for(auto &x:queries)
         {
             if(nums[x[1]]%2==0)
                 sumb4-=nums[x[1]];
