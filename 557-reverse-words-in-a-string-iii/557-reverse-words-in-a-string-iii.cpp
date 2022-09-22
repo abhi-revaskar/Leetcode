@@ -2,7 +2,7 @@ class Solution {
 public:
     string reverseWords(string s) {
         string ans,word;
-        for(auto x:s)
+        for(auto &x:s)
         {
             if(x==' ')
             {
