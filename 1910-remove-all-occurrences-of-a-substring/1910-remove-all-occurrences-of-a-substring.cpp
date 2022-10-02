@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<int> find(string t)
+    vector<int> find(string &t)
     {
         int n = t.length();
         int l = 0,r = 0;
@@ -21,7 +21,8 @@ public:
     string removeOccurrences(string s, string part) {
         while(true)
         {
-            vector<int> z = find(part+"$"+s);
+            string t = part+"$"+s;
+            vector<int> z = find(t);
             // cout<<s<<endl;
             string next;
             int p = part.length(),j=s.length();
