@@ -1,17 +1,22 @@
 class Solution {
 public:
-    int minCost(string colors, vector<int>& neededTime) {
-        int time=0,currmax=neededTime[0];
-        for(int i=1;i<colors.size();i++)
+    int minCost(string colors, vector<int>& time) {
+        int ans = 0,sum=time[0],mx=time[0];
+        for(int i=1;i<colors.length();i++)
         {
             if(colors[i]==colors[i-1])
             {
-                time+=min(currmax,neededTime[i]);
-                currmax = max(currmax,neededTime[i]);
+                sum+=time[i];
+                mx = max(mx,time[i]);
             }
             else
-                currmax=neededTime[i];
+            {
+                ans+=(sum-mx);
+                sum = time[i];
+                mx = time[i];
+            }
         }
-        return time;
+        ans+=(sum-mx);
+        return ans;
     }
 };
