@@ -11,21 +11,11 @@
  */
 class Solution {
 public:
-    bool solve(TreeNode* root, int t)
-    {
-        if(!root->left && !root->right)
-        return root->val ==t;
-        int val = t - root->val;
-        bool ans = false;
-        if(root->left)
-            ans = ans || solve(root->left,val);
-        if(root->right)
-            ans = ans || solve(root->right,val);
-        return ans;
-    }
     bool hasPathSum(TreeNode* root, int t) {
         if(!root)
             return false;
-        return solve(root,t);
+        if(root->val==t && !root->left && !root->right)
+            return true;
+        return hasPathSum(root->left,t-root->val) || hasPathSum(root->right,t-root->val);
     }
 };
