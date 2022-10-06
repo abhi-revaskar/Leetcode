@@ -6,11 +6,18 @@ public:
     }
     
     void set(string key, string value, int timestamp) {
-        mp[key].insert({-timestamp,value});
+        mp[key].insert({timestamp,value});
     }
     
     string get(string key, int timestamp) {
-        auto ans = mp[key].lower_bound({-timestamp,""});
+        auto ans = mp[key].upper_bound({timestamp,""});
+        if(mp[key].empty())
+            return "";
+        if(ans->first==timestamp)
+            return ans->second;
+        if(ans ==mp[key].begin())
+            return "";
+        ans--;
         return ans->second;
     }
 };
