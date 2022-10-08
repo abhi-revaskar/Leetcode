@@ -1,30 +1,26 @@
 class Solution {
 public:
     int threeSumClosest(vector<int>& nums, int target) {
-        long long ans = INT_MAX;
+        int ans,diff = INT_MAX;
+        sort(begin(nums),end(nums));
         int n = nums.size();
-        sort(nums.begin(),nums.end());
         for(int i=0;i<n-2;i++)
         {
-            long long tar1 = target - nums[i];
-            long long sum = INT_MAX;;
-            int j=i+1,k=n-1;
+            int t = target-nums[i],j=i+1,k=n-1;
             while(j<k)
             {
-                if(abs(sum-tar1) > abs(nums[j]+nums[k]-tar1))
-                    sum = nums[j]+nums[k];
-                if(nums[j]+nums[k]>tar1)
+                int sum = nums[j]+nums[k];
+                if(abs(sum-t)<diff)
+                {
+                    ans = nums[i]+sum;
+                    diff = abs(sum-t);
+                }
+                if(sum>t)
                     k--;
                 else
-                    j++;
+                    j++;                
             }
-            
-            if(abs(ans-target)>abs(nums[i]+sum-target))
-                ans = nums[i] + sum;
-            // cout<<sum<<" "<<ans<<" ";
         }
-           return ans;
-                          
-                         
+        return ans;
     }
 };
