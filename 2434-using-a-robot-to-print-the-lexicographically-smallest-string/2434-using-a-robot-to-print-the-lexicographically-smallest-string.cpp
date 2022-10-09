@@ -6,13 +6,13 @@ public:
         for(auto x:mp)
             if(x.second)
                 return x.first;
-        return 'a';
+        return 'z';
     }
     string robotWithString(string s) {
-        for(auto x:s)
+        for(auto &x:s)
             mp[x]++;
         string ans,st;
-        for(auto x:s)
+        for(auto &x:s)
         {
             // cout<<x<<":";
             // cout<<st<<" "<<ans<<endl;
@@ -23,11 +23,6 @@ public:
                 ans+=st.back();
                 st.pop_back();
             }
-        }
-        while(!st.empty())
-        {
-            ans+=st.back();
-            st.pop_back();
         }
         return ans;
     }
