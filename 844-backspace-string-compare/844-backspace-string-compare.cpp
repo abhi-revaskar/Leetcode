@@ -1,29 +1,44 @@
 class Solution {
 public:
     bool backspaceCompare(string s, string t) {
-        stack<char> st1,st2;
-        for(auto x:s)
+        int c1=0,c2=0,i=s.length()-1,j=t.length()-1;
+        while(i>=0 || j>=0)
         {
-            if(x!='#')
-                st1.push(x);
-            else if(!st1.empty())
-                st1.pop();
-        }
-        for(auto x:t)
-        {
-            if(x!='#')
-                st2.push(x);
-            else if(!st2.empty())
-                st2.pop();
-        }
-        if(st1.size()!=st2.size())
-            return false;
-        while(!st1.empty() && !st2.empty())
-        {
-            if(st1.top()!=st2.top())
+            // cout<<i<<" "<<j<<endl;
+            while(i>=0 && s[i]=='#')
+            {
+                c1++;i--;
+            }
+            while(j>=0 && t[j]=='#')
+            {
+                c2++;j--;
+            }
+            while(i>=0 && c1 && s[i]!='#')
+            {
+                c1--;i--;
+            }
+            while(j>=0 && c2 && t[j]!='#')
+            {
+                c2--;j--;
+            }
+            // cout<<i<<" "<<j<<endl;
+            if(i<0 && j<0)
+                return true;
+            if(i<0 && c2==0 && t[j]!='#')
                 return false;
-            st1.pop(),st2.pop();
+            if(j<0 && c1==0 && s[i]!='#')
+                return false;
+            if(i>=0 && j>=0 && s[i]!='#' && t[j]!='#' && s[i]!=t[j])
+                return false;
+            if(i>=0 && j>=0 && s[i]!='#' && t[j]!='#' && s[i]==t[j])
+            {
+                i--;j--;
+            }
         }
+        if(i<0 && j<0)
+            return true;
+        if(i<0 || j<0)
+            return false;
         return true;
     }
 };
