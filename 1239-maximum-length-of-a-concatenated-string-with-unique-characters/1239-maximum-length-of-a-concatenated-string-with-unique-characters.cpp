@@ -1,45 +1,39 @@
 class Solution {
 public:
-    int ans;
-    void find(int i,string &s,vector<string> &arr)
+    int ans = 0;
+    void solve(int i,set<char> &st,vector<string>& t)
     {
-        // cout<<s<<" ";
-        if(i==arr.size())
+        if(i==t.size())
         {
-            ans = max(ans,int(s.length()));
+            ans = max(ans, int(st.size()));
             return;
         }
-        find(i+1,s,arr);
-        for(char x:arr[i])
+        
+        solve(i+1,st,t);
+        for(auto x:t[i])
         {
-            // cout<<x<<" "<<s.find(x)<<endl;
-            if(s.find(x)< s.length())
+            if(st.count(x))
                 return;
         }
-        s+=arr[i];
-        find(i+1,s,arr);
-        s.erase(s.length()-arr[i].length());
+        for(auto x:t[i])
+            st.insert(x);
+        solve(i+1,st,t);
+        for(auto x:t[i])
+            st.erase(x);
     }
     int maxLength(vector<string>& arr) {
-        vector<string> arr2;
-        string s ="";
-        for(auto x:arr)
+        set<char> st;
+        vector<string> t;
+        for(auto s:arr)
         {
-            int f = 0;
-            for(int i=0;i<x.length();i++)
-            {
-                string t = x;
-                t.erase(i,1);
-                if(t.find(x[i])<t.length())
-                {
-                    f=1;
-                    break;
-                }
-            }
-            if(!f)
-                arr2.push_back(x);
+            set<char> st;
+            for(auto c:s)
+                st.insert(c);
+            if(st.size()==s.length())
+                t.push_back(s);
         }
-        find(0,s,arr2);
+        // memset(dp,-1,sizeof(dp));
+         solve(0,st,t);
         return ans;
     }
 };
