@@ -1,7 +1,7 @@
 class Solution {
 public:
     int longestPalindrome(vector<string>& words) {
-        unordered_multiset<string> s;
+        multiset<string> s;
         int len = 0;
         for(auto &x:words)
         {
